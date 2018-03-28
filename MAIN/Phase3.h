@@ -52,7 +52,6 @@ class Phase3
 
 		TGraphErrors* c2_3sub[NV][NR];
 		TGraphErrors* c4_3sub[NV][NR];
-		TGraphErrors* nc4_3sub[NV][NR];
 		TGraphErrors* v2_3sub[NV][NR];
 		TGraphErrors* v4_3sub[NV][NR];
 		TGraphErrors* sc_3sub[NV][NR];

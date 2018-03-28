@@ -2,7 +2,7 @@
 echo "RUNNING PROGRAM"
 
 job=2
-for ((I1=0;I1<1;I1+=1)) # 10*4
+for ((I1=0;I1<40;I1+=1)) # 10*4
 do
 I2=$[$I1+1]
 Filenm01=jobPhase1_$I1"_"$I2.job
@@ -26,7 +26,7 @@ echo "rm $Filenm01">>$Filenm02
 echo "rm $Filenm02">>$Filenm02
 
 chmod 711 $Filenm02
-sh  $Filenm02
-#condor_submit $Filenm01 
+#sh  $Filenm02
+condor_submit $Filenm01 
 done
 

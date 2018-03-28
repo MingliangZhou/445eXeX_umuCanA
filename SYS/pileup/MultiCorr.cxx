@@ -248,7 +248,7 @@ void MultiCorr::fill_1sub_diff(Event* evt)
 		for(unsigned int iP=0; iP<NP; iP++)
 		{
 			double w2pc = cal_w2pd_1sub(evt,iR,iP);
-			double w4pc = cal_w2pd_1sub(evt,iR,iP);
+			double w4pc = cal_w4pd_1sub(evt,iR,iP);
 			if(w2pc>1e-6 && w4pc>1e-6)
 			{
 				cnt_1sub_diff[iR][iP]->Fill(evt->evtCls(),evt->evtWght());

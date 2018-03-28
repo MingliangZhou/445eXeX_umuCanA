@@ -60,8 +60,10 @@ Cumu::Cumu(TFile* fIn, unsigned int iRebin)
 		{
 			initHist_VR(raw_c2_1sub[iV][iR],"raw_c2_1sub",iV,iR,raw,iRebin);
 			initHist_VR(rbn_c2_1sub[iV][iR],"rbn_c2_1sub",iV,iR,rbn,iRebin);
+			initHist_VR(cen_c2_1sub[iV][iR],"cen_c2_1sub",iV,iR,cen,iRebin);
 			initHist_VR(raw_c4_1sub[iV][iR],"raw_c4_1sub",iV,iR,raw,iRebin);
 			initHist_VR(rbn_c4_1sub[iV][iR],"rbn_c4_1sub",iV,iR,rbn,iRebin);
+			initHist_VR(cen_c4_1sub[iV][iR],"cen_c4_1sub",iV,iR,cen,iRebin);
 			initHist_VR(raw_c6_1sub[iV][iR],"raw_c6_1sub",iV,iR,raw,iRebin);
 			initHist_VR(rbn_c6_1sub[iV][iR],"rbn_c6_1sub",iV,iR,rbn,iRebin);
 			initHist_VR(raw_nc4_1sub[iV][iR],"raw_nc4_1sub",iV,iR,raw,iRebin);
@@ -92,9 +94,11 @@ Cumu::Cumu(TFile* fIn, unsigned int iRebin)
 			for(unsigned int iV=0; iV<NV; iV++)
 			{
 				initHist_VRP(raw_d2_1sub[iV][iR][iP],"raw_d2_1sub",iV,iR,iP,raw,iRebin);
-				initHist_VRP(rbn_d2_1sub[iV][iR][iP],"rbn_d2_1sub",iV,iR,iP,rbn,iRebin);
+				initHist_VRP(cen_d2_1sub[iV][iR][iP],"cen_d2_1sub",iV,iR,iP,cen,iRebin);
+				initHist_VRP(cen_vd2_1sub[iV][iR][iP],"cen_vd2_1sub",iV,iR,iP,cen,iRebin);
 				initHist_VRP(raw_d4_1sub[iV][iR][iP],"raw_d4_1sub",iV,iR,iP,raw,iRebin);
-				initHist_VRP(rbn_d4_1sub[iV][iR][iP],"rbn_d4_1sub",iV,iR,iP,rbn,iRebin);
+				initHist_VRP(cen_d4_1sub[iV][iR][iP],"cen_d4_1sub",iV,iR,iP,cen,iRebin);
+				initHist_VRP(cen_vd4_1sub[iV][iR][iP],"cen_vd4_1sub",iV,iR,iP,cen,iRebin);
 			}
 		}
 		for(unsigned int iA=0; iA<NA; iA++)
@@ -120,6 +124,17 @@ Cumu::Cumu(TFile* fIn, unsigned int iRebin)
 			}
 		}
 	}
+	for(unsigned int iV=0; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<NR; iR++)
+		{
+			for(unsigned int iC=0; iC<nCent; iC++)
+			{
+				initHist_VRC(pT_vd2_1sub[iV][iR][iC],"pT_vd2_1sub",iV,iR,iC);
+				initHist_VRC(pT_vd4_1sub[iV][iR][iC],"pT_vd4_1sub",iV,iR,iC);
+			}
+		}
+	}
 }
 
 Cumu::~Cumu()
@@ -129,6 +144,7 @@ Cumu::~Cumu()
 void Cumu::cal_all()
 {
 	run_c();
+	run_d();
 	run_sc();
 	run_ac();
 	run_nc();
@@ -150,7 +166,9 @@ void Cumu::run_c()
 			cal_c_1sub(pc2_1sub_mean[iV][iR],pc4_1sub_mean[iV][iR],pc6_1sub_mean[iV][iR],raw_c2_1sub[iV][iR],raw_c4_1sub[iV][iR],raw_c6_1sub[iV][iR]);
 
 			rebin_cumu(raw_c2_1sub[iV][iR],cnt_1sub[iV],rbn_c2_1sub[iV][iR]);
+			rebin_cumu(raw_c2_1sub[iV][iR],cnt_1sub[iV],cen_c2_1sub[iV][iR]);
 			rebin_cumu(raw_c4_1sub[iV][iR],cnt_1sub[iV],rbn_c4_1sub[iV][iR]);
+			rebin_cumu(raw_c4_1sub[iV][iR],cnt_1sub[iV],cen_c4_1sub[iV][iR]);
 			rebin_cumu(raw_c6_1sub[iV][iR],cnt_1sub[iV],rbn_c6_1sub[iV][iR]);
 		}
 		for(unsigned int iP=0; iP<NP; iP++)
@@ -162,8 +180,10 @@ void Cumu::run_c()
 
 				cal_d_1sub(pd2_1sub_mean[iV][iR][iP],pc2_1sub_mean[iV][iR],pd4_1sub_mean[iV][iR][iP],raw_d2_1sub[iV][iR][iP],raw_d4_1sub[iV][iR][iP]);
 
-				rebin_cumu(raw_d2_1sub[iV][iR][iP],cnt_1sub_diff[iR][iP],rbn_d2_1sub[iV][iR][iP]);
-				rebin_cumu(raw_d4_1sub[iV][iR][iP],cnt_1sub_diff[iR][iP],rbn_d4_1sub[iV][iR][iP]);
+				rebin_cumu(raw_d2_1sub[iV][iR][iP],cnt_1sub_diff[iR][iP],cen_d2_1sub[iV][iR][iP]);
+				rebin_cumu(raw_d4_1sub[iV][iR][iP],cnt_1sub_diff[iR][iP],cen_d4_1sub[iV][iR][iP]);
+
+				cal_vd_1sub(cen_c2_1sub[iV][iR],cen_d2_1sub[iV][iR][iP],cen_c4_1sub[iV][iR],cen_d4_1sub[iV][iR][iP],cen_vd2_1sub[iV][iR][iP],cen_vd4_1sub[iV][iR][iP]);
 			}
 		}
 		for(unsigned int iV=0; iV<NV; iV++)
@@ -181,6 +201,23 @@ void Cumu::run_c()
 			}
 			merge3sub(raw_c4_3sub[0][iV][iR],cnt_3sub[0][iV],raw_c4_3sub[1][iV][iR],cnt_3sub[1][iV],raw_c4_3sub[2][iV][iR],cnt_3sub[2][iV]);
 			merge3sub(rbn_c4_3sub[0][iV][iR],rbn_cnt_3sub[0][iV],rbn_c4_3sub[1][iV][iR],rbn_cnt_3sub[1][iV],rbn_c4_3sub[2][iV][iR],rbn_cnt_3sub[2][iV]);
+		}
+	}
+}
+
+void Cumu::run_d()
+{
+	vector<TH1D*> hPts;
+	for(unsigned int iV=0; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<NR; iR++)
+		{
+			for(unsigned int iP=0; iP<NP; iP++) hPts.push_back(cen_vd2_1sub[iV][iR][iP]);
+			for(unsigned int iC=0; iC<nCent; iC++) cvt_cent_pt(hPts,pT_vd2_1sub[iV][iR][iC],iC);
+			hPts.clear();
+			for(unsigned int iP=0; iP<NP; iP++) hPts.push_back(cen_vd4_1sub[iV][iR][iP]);
+			for(unsigned int iC=0; iC<nCent; iC++) cvt_cent_pt(hPts,pT_vd4_1sub[iV][iR][iC],iC);
+			hPts.clear();
 		}
 	}
 }
@@ -372,6 +409,27 @@ void Cumu::cal_d_1sub(TH1D* pd2, TH1D* pc2, TH1D* pd4, TH1D* d2, TH1D* d4)
 	}
 }
 
+void Cumu::cal_vd_1sub(TH1D* c2, TH1D* d2, TH1D* c4, TH1D* d4, TH1D* vd2, TH1D* vd4)
+{
+	int NX = vd2->GetNbinsX();
+	for(int iX=0; iX<NX; iX++)
+	{
+		double c2v = c2->GetBinContent(iX+1);
+		double d2v = d2->GetBinContent(iX+1);
+		double c4v = c4->GetBinContent(iX+1);
+		double d4v = d4->GetBinContent(iX+1);
+		double vd2v = 0;
+		double vd4v = 0;
+		if(c2v>0) vd2v = d2v/sqrt(c2v);
+		else if(c2v<0) vd2v = -d2v/sqrt(-c2v);
+		if(c4v>0) vd4v = d4v/pow(c4v,3./4);
+		else if(c4v<0) vd4v = -d4v/pow(-c4v,3./4);
+
+		vd2->SetBinContent(iX+1,vd2v);
+		vd4->SetBinContent(iX+1,vd4v);
+	}
+}
+
 void Cumu::cal_c_3sub(TH1D* pc2_1, TH1D* pc2_2, TH1D* pc4, TH1D* c2, TH1D* c4)
 {
 	int NX = pc2_1->GetNbinsX();
@@ -556,6 +614,15 @@ void Cumu::merge3sub(TH1D* h1, TH1D* h1w, TH1D* h2, TH1D* h2w, TH1D* h3, TH1D* h
 	}
 }
 
+void Cumu::cvt_cent_pt(vector<TH1D*> vIn, TH1D* hOut, int iC)
+{
+	for(unsigned int iP=0; iP<NP; iP++)
+	{
+		double y = (vIn.at(iP))->GetBinContent(iC+1);
+		hOut->SetBinContent(iP+1,y);
+	}
+}
+
 void Cumu::writeHist(TFile*& fIn)
 {
   fIn->cd();
@@ -565,8 +632,10 @@ void Cumu::writeHist(TFile*& fIn)
 		{
 			raw_c2_1sub[iV][iR]->Write();
 			rbn_c2_1sub[iV][iR]->Write();
+			cen_c2_1sub[iV][iR]->Write();
 			raw_c4_1sub[iV][iR]->Write();
 			rbn_c4_1sub[iV][iR]->Write();
+			cen_c4_1sub[iV][iR]->Write();
 			raw_c6_1sub[iV][iR]->Write();
 			rbn_c6_1sub[iV][iR]->Write();
 			raw_nc4_1sub[iV][iR]->Write();
@@ -597,9 +666,11 @@ void Cumu::writeHist(TFile*& fIn)
 			for(unsigned int iV=0; iV<NV; iV++)
 			{
 				raw_d2_1sub[iV][iR][iP]->Write();
-				rbn_d2_1sub[iV][iR][iP]->Write();
+				cen_d2_1sub[iV][iR][iP]->Write();
+				cen_vd2_1sub[iV][iR][iP]->Write();
 				raw_d4_1sub[iV][iR][iP]->Write();
-				rbn_d4_1sub[iV][iR][iP]->Write();
+				cen_d4_1sub[iV][iR][iP]->Write();
+				cen_vd4_1sub[iV][iR][iP]->Write();
 			}
 		}
 		for(unsigned int iA=0; iA<NA; iA++)
@@ -622,6 +693,17 @@ void Cumu::writeHist(TFile*& fIn)
 				rbn_ac_3sub[iA][iV][iR]->Write();
 				raw_nac_3sub[iA][iV][iR]->Write();
 				rbn_nac_3sub[iA][iV][iR]->Write();
+			}
+		}
+	}
+	for(unsigned int iV=0; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<NR; iR++)
+		{
+			for(unsigned int iC=0; iC<nCent; iC++)
+			{
+				pT_vd2_1sub[iV][iR][iC]->Write();
+				pT_vd4_1sub[iV][iR][iC]->Write();
 			}
 		}
 	}
@@ -651,7 +733,7 @@ void Cumu::initHist_VR(TH1D*& hIn, const char* hName, int iV, int iR, int iOpt, 
 	sprintf(name,"%s_Har%d_PtRef%d",hName,iV,iR);
 	if(iOpt==raw) hIn = new TH1D(name,"",nBin,minBin,maxBin);
 	if(iOpt==rbn) hIn = new TH1D(name,"",nRebin[iRebin],xRebin[iRebin]);
-	//if(iOpt==cen) hIn = new TH1D(name,"",nCent,xCent);
+	if(iOpt==cen) hIn = new TH1D(name,"",nCent,xCent);
 }
 
 void Cumu::initHist_VRP(TH1D*& hIn, const char* hName, int iV, int iR, int iP, int iOpt, int iRebin)
@@ -659,7 +741,7 @@ void Cumu::initHist_VRP(TH1D*& hIn, const char* hName, int iV, int iR, int iP, i
 	sprintf(name,"%s_Har%d_PtRef%d_Pt%d",hName,iV,iR,iP);
 	if(iOpt==raw) hIn = new TH1D(name,"",nBin,minBin,maxBin);
 	if(iOpt==rbn) hIn = new TH1D(name,"",nRebin[iRebin],xRebin[iRebin]);
-	//if(iOpt==cen) hIn = new TH1D(name,"",nCent,xCent);
+	if(iOpt==cen) hIn = new TH1D(name,"",nCent,xCent);
 }
 
 void Cumu::initHist_AVR(TH1D*& hIn, const char* hName, int iA, int iV, int iR, int iOpt, int iRebin)
@@ -667,4 +749,10 @@ void Cumu::initHist_AVR(TH1D*& hIn, const char* hName, int iA, int iV, int iR, i
 	sprintf(name,"%s_Pm%d_Har%d_PtRef%d",hName,iA,iV,iR);
 	if(iOpt==raw) hIn = new TH1D(name,"",nBin,minBin,maxBin);
 	if(iOpt==rbn) hIn = new TH1D(name,"",nRebin[iRebin],xRebin[iRebin]);
+}
+
+void Cumu::initHist_VRC(TH1D*& hIn, const char* hName, int iV, int iR, int iC)
+{
+	sprintf(name,"%s_Har%d_PtRef%d_Cent%d",hName,iV,iR,iC);
+	hIn = new TH1D(name,"",NP,xPt);
 }

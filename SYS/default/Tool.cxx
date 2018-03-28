@@ -4,7 +4,7 @@
 
 Tool::Tool()
 {
-	TFile* fInFlat = new TFile("../../../MON/FLAT/OUTPUT_Phase2/Phase2_All.root","READ");
+	TFile* fInFlat = new TFile("../../../../MON/FLAT/OUTPUT_Phase2/Phase2_All.root","READ");
 	for(unsigned int iC=0; iC<NC_Flat; iC++)
 	{
 		for(unsigned int iZ=0; iZ<NZ_Flat; iZ++)
@@ -20,7 +20,7 @@ Tool::Tool()
 		}
 	}
 
-	TFile* fInEff = new TFile("../../../INPUT/trkEff.root","READ");
+	TFile* fInEff = new TFile("../../../../INPUT/trkEff.root","READ");
 	allTrue = (TH3D*)fInEff->Get("allTrue");
 	allReco = (TH3D*)fInEff->Get("allReco");
 	matchedReco = (TH3D*)fInEff->Get("matchedReco");

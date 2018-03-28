@@ -63,7 +63,7 @@ void Phase1::initialize(int iJob)
 	{
 		string fName;
 		lis >> fName;
-		if(cnt>=int(1.*iJob/nSample)*37./nFile && cnt<int(1.*iJob/nSample+1)*37./nFile) // 37 is # of rows in flist.txt
+		if(cnt>=int(1.*iJob/nSample)*21./nFile && cnt<int(1.*iJob/nSample+1)*21./nFile) // 21 is # of rows in flist.txt
 		{
 			cout<<fName.c_str()<<endl;
 			if(!fName.empty()) treeIn->Add(fName.c_str());

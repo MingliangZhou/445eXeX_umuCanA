@@ -42,8 +42,10 @@ class Cumu
 		// output
 		TH1D* raw_c2_1sub[NV][NR];
 		TH1D* rbn_c2_1sub[NV][NR];
+		TH1D* cen_c2_1sub[NV][NR];
 		TH1D* raw_c4_1sub[NV][NR];
 		TH1D* rbn_c4_1sub[NV][NR];
+		TH1D* cen_c4_1sub[NV][NR];
 		TH1D* raw_c6_1sub[NV][NR];
 		TH1D* rbn_c6_1sub[NV][NR];
 		TH1D* raw_nc4_1sub[NV][NR];
@@ -70,9 +72,11 @@ class Cumu
 		TH1D* rbn_nac_1sub[NV][NR];
 
 		TH1D* raw_d2_1sub[NV][NR][NP];
-		TH1D* rbn_d2_1sub[NV][NR][NP];
+		TH1D* cen_d2_1sub[NV][NR][NP];
+		TH1D* cen_vd2_1sub[NV][NR][NP];
 		TH1D* raw_d4_1sub[NV][NR][NP];
-		TH1D* rbn_d4_1sub[NV][NR][NP];
+		TH1D* cen_d4_1sub[NV][NR][NP];
+		TH1D* cen_vd4_1sub[NV][NR][NP];
 
 		TH1D* rbn_cnt_3sub[NA][NR];
 		TH1D* raw_c2_3sub[NA][NV][NR];
@@ -94,7 +98,11 @@ class Cumu
 		TH1D* raw_nac_3sub[NA][NV][NR];
 		TH1D* rbn_nac_3sub[NA][NV][NR];
 
+		TH1D* pT_vd2_1sub[NV][NR][nCent];
+		TH1D* pT_vd4_1sub[NV][NR][nCent];
+
 		void run_c();
+		void run_d();
 		void run_sc();
 		void run_ac();
 		void run_nc();
@@ -104,6 +112,7 @@ class Cumu
 
 		void cal_c_1sub(TH1D* pc2, TH1D* pc4, TH1D* pc6, TH1D* c2, TH1D* c4, TH1D* c6);
 		void cal_d_1sub(TH1D* pd2, TH1D* pc2, TH1D* pd4, TH1D* d2, TH1D* d4);
+		void cal_vd_1sub(TH1D* c2, TH1D* d2, TH1D* c4, TH1D* d4, TH1D* vd2, TH1D* vd4);
 		void cal_ac(TH1D* pac3, TH1D* ac3);
 		void cal_sc(TH1D* pc2_1, TH1D* pc2_2, TH1D* psc4, TH1D* sc4);
 		void cal_c_3sub(TH1D* pc2_1, TH1D* pc2_2, TH1D* pc4, TH1D* c2, TH1D* c4);
@@ -116,6 +125,7 @@ class Cumu
 
 		void rebin_cumu(TH1D* hIn, TH1D* hWght, TH1D* hOut);
 		void merge3sub(TH1D* h1, TH1D* h1w, TH1D* h2, TH1D* h2w, TH1D* h3, TH1D* h3w);
+		void cvt_cent_pt(vector<TH1D*> vIn, TH1D* hOut, int iC);
 		
 		void readHist_VR(TFile*, TH1D*&, const char*, int iV, int iR);
 		void readHist_VRP(TFile*, TH1D*&, const char*, int iV, int iR, int iP);
@@ -123,6 +133,7 @@ class Cumu
 		void initHist_VR(TH1D*&, const char*, int iV, int iR, int iOpt, int iRebin);
 		void initHist_VRP(TH1D*&, const char*, int iV, int iR, int iP, int iOpt, int iRebin);
 		void initHist_AVR(TH1D*&, const char*, int iA, int iV, int iR, int iOpt, int iRebin);
+		void initHist_VRC(TH1D*&, const char*, int iV, int iR, int iP);
 
 	public:
 		Cumu(TFile*, unsigned int iRebin);

@@ -47,10 +47,10 @@ const double xCent[nCent+1] = {0,5,10,20,40,60,80};
 
 const unsigned int NV = 5; // harmonics from v0 to v4
 const unsigned int NVm = 13; // higher harmonics for Q-cumulant with weights, from v0 to v12
-const unsigned int NP = 12; // number of pT cuts for differential particles
-const double minPt[NP] = {0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 5.0, 7.0, 10.0};
-const double maxPt[NP] = {0.6, 0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 5.0, 7.0,10.0, 20.0};
-const double xPt[NP+1] = {0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 5.0, 7.0, 10.0, 20.0};
+const unsigned int NP = 6; // number of pT cuts for differential particles
+const double minPt[NP] = {0.5, 0.7, 1.0, 2.0, 5.0, 10.0};
+const double maxPt[NP] = {0.7, 1.0, 2.0, 5.0, 10.0, 20.0};
+const double xPt[NP+1] = {0.5, 0.7, 1.0, 2.0, 5.0, 10.0, 20.0};
 const unsigned int NR = 4; // number of pT cuts for reference particles
 const double minPtRef[NR] = {0.5, 1.0, 1.5, 2.0}; // minimum pT for reference particles
 const double maxPtRef[NR] = {5.0, 5.0, 5.0, 5.0}; // maximum pT for reference particles
