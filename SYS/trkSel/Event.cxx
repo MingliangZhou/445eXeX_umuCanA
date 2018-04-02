@@ -73,6 +73,7 @@ void Event::setEvent(Tool* tool)
 		double trkFak = tool->detTrkFak(m_cent,m_trkPt[iT],m_trkEta[iT]);
 		double trkFla = tool->detFlat(m_cent,m_zPriVtx,m_trkChg[iT],m_trkPt[iT],m_trkEta[iT],m_trkPhi[iT]);
 		m_trkWei[iT] = trkFla*(1-trkFak)/trkEff;
+		if(fabs(m_trkWei[iT])>1e5) m_trkWei[iT] = 1;
 
 		if(fabs(m_trkEta[iT])>=cutEta) continue;
 		//if(m_trkQual[iT]!=cutQual) continue; // loose track selection

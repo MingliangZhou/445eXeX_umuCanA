@@ -38,9 +38,13 @@ const double cutQual = 1;
 const unsigned int nBin = 80;
 const double minBin = 0;
 const double maxBin = 80;
-const unsigned int nRebin[2] = {24,11};
-// {0,1,2,3,4,5,6,7,8,9,10,12,14,16,18,20,25,30,35,40,45,50,60,70,80};
-// {0,2,4,6,8,10,15,20,30,40,60,80};
+const unsigned int nRebin[2] = {7,7};
+const double xRebin[2][8] =
+{
+	{0,5,10,20,30,40,60,80},
+	{0,5,10,20,30,40,60,80}
+	//{0,2,4,6,8,10,15,20,30,40,60,80}
+};
 
 const unsigned int nCent = 6; // for pT measurements
 const double xCent[nCent+1] = {0,5,10,20,40,60,80};
