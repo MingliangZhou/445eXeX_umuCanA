@@ -26,12 +26,12 @@ void Plot::execute(unsigned int iBin)
 	{
 		for(unsigned int iR=0; iR<1; iR++)
 		{
-			vSts.push_back(sts_v2_3sub[iV][iR]);
-			vSts.push_back(sts_v4_1sub[iV][iR]);
-			if(iV==2) vSts.push_back(sts_v6_1sub[iV][iR]);
-			vSys.push_back(sys_v2_3sub[iV][iR]);
-			vSys.push_back(sys_v4_1sub[iV][iR]);
-			if(iV==2) vSys.push_back(sys_v6_1sub[iV][iR]);
+			vSts.push_back(sts_v2_3sub[0][iV][iR]);
+			vSts.push_back(sts_v4_1sub[0][iV][iR]);
+			if(iV==2) vSts.push_back(sts_v6_1sub[0][iV][iR]);
+			vSys.push_back(sys_v2_3sub[0][iV][iR]);
+			vSys.push_back(sys_v4_1sub[0][iV][iR]);
+			if(iV==2) vSys.push_back(sys_v6_1sub[0][iV][iR]);
 			draw_graph(vSts,vSys,iV,iR,-1,0,iBin);
 			vSts.clear();
 			vSys.clear();
@@ -41,12 +41,12 @@ void Plot::execute(unsigned int iBin)
 	// 1: SC(2,3), SC(2,4), AC(2,2,4)
 	for(unsigned int iR=0; iR<1; iR++)
 	{
-		vSts.push_back(sts_sc_1sub[0][iR]);
-		vSts.push_back(sts_sc_1sub[1][iR]);
-		vSts.push_back(sts_ac_1sub[2][iR]);
-		vSys.push_back(sys_sc_1sub[0][iR]);
-		vSys.push_back(sys_sc_1sub[1][iR]);
-		vSys.push_back(sys_ac_1sub[2][iR]);
+		vSts.push_back(sts_sc_1sub[0][0][iR]);
+		vSts.push_back(sts_sc_1sub[0][1][iR]);
+		vSts.push_back(sts_ac_1sub[0][2][iR]);
+		vSys.push_back(sys_sc_1sub[0][0][iR]);
+		vSys.push_back(sys_sc_1sub[0][1][iR]);
+		vSys.push_back(sys_ac_1sub[0][2][iR]);
 		draw_graph(vSts,vSys,-1,iR,-1,1,iBin);
 		vSts.clear();
 		vSys.clear();
@@ -55,12 +55,12 @@ void Plot::execute(unsigned int iBin)
 	// 2: NSC(2,3), NSC(2,4), NAC(2,2,4)
 	for(unsigned int iR=0; iR<1; iR++)
 	{
-		vSts.push_back(sts_nsc_1sub[0][iR]);
-		vSts.push_back(sts_nsc_1sub[1][iR]);
-		vSts.push_back(sts_nac_1sub[2][iR]);
-		vSys.push_back(sys_nsc_1sub[0][iR]);
-		vSys.push_back(sys_nsc_1sub[1][iR]);
-		vSys.push_back(sys_nac_1sub[2][iR]);
+		vSts.push_back(sts_nsc_1sub[0][0][iR]);
+		vSts.push_back(sts_nsc_1sub[0][1][iR]);
+		vSts.push_back(sts_nac_1sub[0][2][iR]);
+		vSys.push_back(sys_nsc_1sub[0][0][iR]);
+		vSys.push_back(sys_nsc_1sub[0][1][iR]);
+		vSys.push_back(sys_nac_1sub[0][2][iR]);
 		draw_graph(vSts,vSys,-1,iR,-1,2,iBin);
 		vSts.clear();
 		vSys.clear();
@@ -71,8 +71,8 @@ void Plot::execute(unsigned int iBin)
 	{
 		for(unsigned int iR=0; iR<1; iR++)
 		{
-			vSts.push_back(sts_cr42_1sub[iV][iR]);
-			vSys.push_back(sys_cr42_1sub[iV][iR]);
+			vSts.push_back(sts_cr42_1sub[0][iV][iR]);
+			vSys.push_back(sys_cr42_1sub[0][iV][iR]);
 			draw_graph(vSts,vSys,iV,iR,-1,3,iBin);
 			vSts.clear();
 			vSys.clear();
@@ -84,8 +84,8 @@ void Plot::execute(unsigned int iBin)
 	{
 		for(unsigned int iR=0; iR<1; iR++)
 		{
-			vSts.push_back(sts_cr64_1sub[iV][iR]);
-			vSys.push_back(sys_cr64_1sub[iV][iR]);
+			vSts.push_back(sts_cr64_1sub[0][iV][iR]);
+			vSys.push_back(sys_cr64_1sub[0][iV][iR]);
 			draw_graph(vSts,vSys,iV,iR,-1,4,iBin);
 			vSts.clear();
 			vSys.clear();
@@ -99,14 +99,206 @@ void Plot::execute(unsigned int iBin)
 		{
 			for(unsigned int iC=0; iC<nCent; iC++)
 			{
-				vSts.push_back(sts_vd2_1sub[iV][iR][iC]);
-				vSts.push_back(sts_vd4_1sub[iV][iR][iC]);
-				vSys.push_back(sys_vd2_1sub[iV][iR][iC]);
-				vSys.push_back(sys_vd4_1sub[iV][iR][iC]);
+				vSts.push_back(sts_vd2_1sub[0][iV][iR][iC]);
+				vSts.push_back(sts_vd4_1sub[0][iV][iR][iC]);
+				vSys.push_back(sys_vd2_1sub[0][iV][iR][iC]);
+				vSys.push_back(sys_vd4_1sub[0][iV][iR][iC]);
 				draw_graph(vSts,vSys,iV,iR,iC,5,iBin);
 				vSts.clear();
 				vSys.clear();
 			}
+		}
+	}
+
+	// 0: c2
+	for(unsigned int iV=2; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_c2_1sub[iF][iV][iR]);
+				vSys.push_back(sys_c2_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,0,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 1: c4
+	for(unsigned int iV=2; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_c4_1sub[iF][iV][iR]);
+				vSys.push_back(sys_c4_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,1,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 2: c6
+	for(unsigned int iV=2; iV<3; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_c6_1sub[iF][iV][iR]);
+				vSys.push_back(sys_c6_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,2,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 3: v2
+	for(unsigned int iV=2; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_v2_1sub[iF][iV][iR]);
+				vSys.push_back(sys_v2_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,3,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 4: v4
+	for(unsigned int iV=2; iV<NV; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_v4_1sub[iF][iV][iR]);
+				vSys.push_back(sys_v4_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,4,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 5: v6
+	for(unsigned int iV=2; iV<3; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_v6_1sub[iF][iV][iR]);
+				vSys.push_back(sys_v6_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,5,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 6: sc
+	for(unsigned int iV=0; iV<2; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_sc_1sub[iF][iV][iR]);
+				vSys.push_back(sys_sc_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,6,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 7: ac
+	for(unsigned int iV=2; iV<3; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_ac_1sub[iF][iV][iR]);
+				vSys.push_back(sys_ac_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,7,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 8: nsc
+	for(unsigned int iV=0; iV<2; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_nsc_1sub[iF][iV][iR]);
+				vSys.push_back(sys_nsc_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,8,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 9: nac
+	for(unsigned int iV=2; iV<3; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_nac_1sub[iF][iV][iR]);
+				vSys.push_back(sys_nac_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,9,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 10: cr42
+	for(unsigned int iV=2; iV<3; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_cr42_1sub[iF][iV][iR]);
+				vSys.push_back(sys_cr42_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,10,iBin);
+			vSts.clear();
+			vSys.clear();
+		}
+	}
+
+	// 11: cr64
+	for(unsigned int iV=2; iV<3; iV++)
+	{
+		for(unsigned int iR=0; iR<1; iR++)
+		{
+			for(unsigned int iF=0; iF<2; iF++)
+			{
+				vSts.push_back(sts_cr64_1sub[iF][iV][iR]);
+				vSys.push_back(sys_cr64_1sub[iF][iV][iR]);
+			}
+			draw_graphComp(vSts,vSys,iV,iR,-1,11,iBin);
+			vSts.clear();
+			vSys.clear();
 		}
 	}
 
@@ -117,66 +309,72 @@ void Plot::initialize(unsigned int iBin)
 {
 	cout<<"initialize..."<<endl;
 
-	sprintf(name,"../../MAIN/OUTPUT/Phase4/hist_PbPb502_binCent_bin%d.root",iBin);
-	TFile* fIn = new TFile(name,"READ");
-	for(unsigned int iV=0; iV<NV; iV++)
+	TFile* fIn[2];
+	
+	for(unsigned int iF=0; iF<2; iF++)
 	{
-		for(unsigned int iR=0; iR<NR; iR++)
+		if(iF==0) sprintf(name,"../../MAIN/OUTPUT/Phase4/hist_XeXe544_binCent_bin%d.root",iBin);
+		if(iF==1) sprintf(name,"../../MAIN_PbPb502/OUTPUT/Phase4/hist_PbPb502_binCent_bin%d.root",iBin);
+		fIn[iF] = new TFile(name,"READ");
+		for(unsigned int iV=0; iV<NV; iV++)
 		{
-			readHist_VR(fIn,sys_c2_1sub[iV][iR],"sys_c2_1sub",iV,iR);
-			readHist_VR(fIn,sys_c4_1sub[iV][iR],"sys_c4_1sub",iV,iR);
-			readHist_VR(fIn,sys_c6_1sub[iV][iR],"sys_c6_1sub",iV,iR);
-			readHist_VR(fIn,sys_nc4_1sub[iV][iR],"sys_nc4_1sub",iV,iR);
-			readHist_VR(fIn,sys_nc6_1sub[iV][iR],"sys_nc6_1sub",iV,iR);
-			readHist_VR(fIn,sys_v2_1sub[iV][iR],"sys_v2_1sub",iV,iR);
-			readHist_VR(fIn,sys_v4_1sub[iV][iR],"sys_v4_1sub",iV,iR);
-			readHist_VR(fIn,sys_v6_1sub[iV][iR],"sys_v6_1sub",iV,iR);
-			readHist_VR(fIn,sys_cr42_1sub[iV][iR],"sys_cr42_1sub",iV,iR);
-			readHist_VR(fIn,sys_cr64_1sub[iV][iR],"sys_cr64_1sub",iV,iR);
-			readHist_VR(fIn,sys_sc_1sub[iV][iR],"sys_sc_1sub",iV,iR);
-			readHist_VR(fIn,sys_nsc_1sub[iV][iR],"sys_nsc_1sub",iV,iR);
-			readHist_VR(fIn,sys_ac_1sub[iV][iR],"sys_ac_1sub",iV,iR);
-			readHist_VR(fIn,sys_nac_1sub[iV][iR],"sys_nac_1sub",iV,iR);
-			readHist_VR(fIn,sys_c2_3sub[iV][iR],"sys_c2_3sub",iV,iR);
-			readHist_VR(fIn,sys_c4_3sub[iV][iR],"sys_c4_3sub",iV,iR);
-			readHist_VR(fIn,sys_v2_3sub[iV][iR],"sys_v2_3sub",iV,iR);
-			readHist_VR(fIn,sys_v4_3sub[iV][iR],"sys_v4_3sub",iV,iR);
-			readHist_VR(fIn,sys_sc_3sub[iV][iR],"sys_sc_3sub",iV,iR);
-			readHist_VR(fIn,sys_nsc_3sub[iV][iR],"sys_nsc_3sub",iV,iR);
-			readHist_VR(fIn,sys_ac_3sub[iV][iR],"sys_ac_3sub",iV,iR);
-			readHist_VR(fIn,sys_nac_3sub[iV][iR],"sys_nac_3sub",iV,iR);
-			for(unsigned int iC=0; iC<nCent; iC++)
+			for(unsigned int iR=0; iR<NR; iR++)
 			{
-				readHist_VRC(fIn,sys_vd2_1sub[iV][iR][iC],"sys_vd2_1sub",iV,iR,iC);
-				readHist_VRC(fIn,sys_vd4_1sub[iV][iR][iC],"sys_vd4_1sub",iV,iR,iC);
-			}
+				readHist_VR(fIn[iF],sys_c2_1sub[iF][iV][iR],"sys_c2_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_c4_1sub[iF][iV][iR],"sys_c4_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_c6_1sub[iF][iV][iR],"sys_c6_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_nc4_1sub[iF][iV][iR],"sys_nc4_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_nc6_1sub[iF][iV][iR],"sys_nc6_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_v2_1sub[iF][iV][iR],"sys_v2_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_v4_1sub[iF][iV][iR],"sys_v4_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_v6_1sub[iF][iV][iR],"sys_v6_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_cr42_1sub[iF][iV][iR],"sys_cr42_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_cr64_1sub[iF][iV][iR],"sys_cr64_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_sc_1sub[iF][iV][iR],"sys_sc_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_nsc_1sub[iF][iV][iR],"sys_nsc_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_ac_1sub[iF][iV][iR],"sys_ac_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_nac_1sub[iF][iV][iR],"sys_nac_1sub",iV,iR);
+				readHist_VR(fIn[iF],sys_c2_3sub[iF][iV][iR],"sys_c2_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_c4_3sub[iF][iV][iR],"sys_c4_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_v2_3sub[iF][iV][iR],"sys_v2_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_v4_3sub[iF][iV][iR],"sys_v4_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_sc_3sub[iF][iV][iR],"sys_sc_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_nsc_3sub[iF][iV][iR],"sys_nsc_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_ac_3sub[iF][iV][iR],"sys_ac_3sub",iV,iR);
+				readHist_VR(fIn[iF],sys_nac_3sub[iF][iV][iR],"sys_nac_3sub",iV,iR);
+				for(unsigned int iC=0; iC<nCent; iC++)
+				{
+					readHist_VRC(fIn[iF],sys_vd2_1sub[iF][iV][iR][iC],"sys_vd2_1sub",iV,iR,iC);
+					readHist_VRC(fIn[iF],sys_vd4_1sub[iF][iV][iR][iC],"sys_vd4_1sub",iV,iR,iC);
+				}
 
-			readHist_VR(fIn,sts_c2_1sub[iV][iR],"sts_c2_1sub",iV,iR);
-			readHist_VR(fIn,sts_c4_1sub[iV][iR],"sts_c4_1sub",iV,iR);
-			readHist_VR(fIn,sts_c6_1sub[iV][iR],"sts_c6_1sub",iV,iR);
-			readHist_VR(fIn,sts_nc4_1sub[iV][iR],"sts_nc4_1sub",iV,iR);
-			readHist_VR(fIn,sts_nc6_1sub[iV][iR],"sts_nc6_1sub",iV,iR);
-			readHist_VR(fIn,sts_v2_1sub[iV][iR],"sts_v2_1sub",iV,iR);
-			readHist_VR(fIn,sts_v4_1sub[iV][iR],"sts_v4_1sub",iV,iR);
-			readHist_VR(fIn,sts_v6_1sub[iV][iR],"sts_v6_1sub",iV,iR);
-			readHist_VR(fIn,sts_cr42_1sub[iV][iR],"sts_cr42_1sub",iV,iR);
-			readHist_VR(fIn,sts_cr64_1sub[iV][iR],"sts_cr64_1sub",iV,iR);
-			readHist_VR(fIn,sts_sc_1sub[iV][iR],"sts_sc_1sub",iV,iR);
-			readHist_VR(fIn,sts_nsc_1sub[iV][iR],"sts_nsc_1sub",iV,iR);
-			readHist_VR(fIn,sts_ac_1sub[iV][iR],"sts_ac_1sub",iV,iR);
-			readHist_VR(fIn,sts_nac_1sub[iV][iR],"sts_nac_1sub",iV,iR);
-			readHist_VR(fIn,sts_c2_3sub[iV][iR],"sts_c2_3sub",iV,iR);
-			readHist_VR(fIn,sts_c4_3sub[iV][iR],"sts_c4_3sub",iV,iR);
-			readHist_VR(fIn,sts_v2_3sub[iV][iR],"sts_v2_3sub",iV,iR);
-			readHist_VR(fIn,sts_v4_3sub[iV][iR],"sts_v4_3sub",iV,iR);
-			readHist_VR(fIn,sts_sc_3sub[iV][iR],"sts_sc_3sub",iV,iR);
-			readHist_VR(fIn,sts_nsc_3sub[iV][iR],"sts_nsc_3sub",iV,iR);
-			readHist_VR(fIn,sts_ac_3sub[iV][iR],"sts_ac_3sub",iV,iR);
-			readHist_VR(fIn,sts_nac_3sub[iV][iR],"sts_nac_3sub",iV,iR);
-			for(unsigned int iC=0; iC<nCent; iC++)
-			{
-				readHist_VRC(fIn,sts_vd2_1sub[iV][iR][iC],"sts_vd2_1sub",iV,iR,iC);
-				readHist_VRC(fIn,sts_vd4_1sub[iV][iR][iC],"sts_vd4_1sub",iV,iR,iC);
+				readHist_VR(fIn[iF],sts_c2_1sub[iF][iV][iR],"sts_c2_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_c4_1sub[iF][iV][iR],"sts_c4_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_c6_1sub[iF][iV][iR],"sts_c6_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_nc4_1sub[iF][iV][iR],"sts_nc4_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_nc6_1sub[iF][iV][iR],"sts_nc6_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_v2_1sub[iF][iV][iR],"sts_v2_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_v4_1sub[iF][iV][iR],"sts_v4_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_v6_1sub[iF][iV][iR],"sts_v6_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_cr42_1sub[iF][iV][iR],"sts_cr42_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_cr64_1sub[iF][iV][iR],"sts_cr64_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_sc_1sub[iF][iV][iR],"sts_sc_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_nsc_1sub[iF][iV][iR],"sts_nsc_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_ac_1sub[iF][iV][iR],"sts_ac_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_nac_1sub[iF][iV][iR],"sts_nac_1sub",iV,iR);
+				readHist_VR(fIn[iF],sts_c2_3sub[iF][iV][iR],"sts_c2_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_c4_3sub[iF][iV][iR],"sts_c4_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_v2_3sub[iF][iV][iR],"sts_v2_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_v4_3sub[iF][iV][iR],"sts_v4_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_sc_3sub[iF][iV][iR],"sts_sc_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_nsc_3sub[iF][iV][iR],"sts_nsc_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_ac_3sub[iF][iV][iR],"sts_ac_3sub",iV,iR);
+				readHist_VR(fIn[iF],sts_nac_3sub[iF][iV][iR],"sts_nac_3sub",iV,iR);
+				for(unsigned int iC=0; iC<nCent; iC++)
+				{
+					readHist_VRC(fIn[iF],sts_vd2_1sub[iF][iV][iR][iC],"sts_vd2_1sub",iV,iR,iC);
+					readHist_VRC(fIn[iF],sts_vd4_1sub[iF][iV][iR][iC],"sts_vd4_1sub",iV,iR,iC);
+				}
 			}
 		}
 	}
@@ -358,6 +556,136 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	delete cOut;
 }
 
+void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSys, int iV, int iR, int iC, int iOpt, unsigned int iBin)
+{
+	int NG = vSts.size();
+	TGraphErrors* gSts[10];
+	TGraphAsymmErrors* gSys[10];
+	for(int iG=0; iG<NG; iG++)
+	{
+		gSts[iG] = (TGraphErrors*)vSts.at(iG)->Clone("gSts");
+		styleGraph(gSts[iG],iG);
+		gSys[iG] = (TGraphAsymmErrors*)vSys.at(iG)->Clone("gSys");
+		styleGraph(gSys[iG],iG);
+		gSys[iG]->SetFillColor(mC[iG]);
+		gSys[iG]->SetFillStyle(3001);
+		for(int i=0; i<gSys[iG]->GetN(); i++)
+		{
+			gSys[iG]->SetPointEXhigh(i,1);
+			gSys[iG]->SetPointEXlow(i,1);
+		}
+	}
+
+	TLatex* tex = new TLatex();
+	tex->SetTextFont(42);
+	tex->SetTextSize(0.045);
+	tex->SetTextAlign(12);
+	tex->SetNDC(1);
+	TLine* lin = new TLine();
+	lin->SetLineColor(1);
+	lin->SetLineStyle(2);
+	lin->SetLineWidth(2);
+	TLegend* leg = new TLegend(0.125,0.125,0.95,0.25);
+	leg->SetTextSize(0.05);
+	leg->SetFillStyle(0);
+	leg->SetBorderSize(0);
+	leg->SetNColumns(2);
+	leg->AddEntry(gSts[0],"Xe+Xe 5.44 TeV","p");
+	leg->AddEntry(gSts[1],"Pb+Pb 5.02 TeV","p");
+
+	double xMin =  0;
+	double xMax = 80;
+	double yMin =  1;
+	double yMax = -1;
+	for(int iG=0; iG<NG; iG++) getYrange(gSts[iG],yMin,yMax,0);
+	double diff = yMax-yMin;
+	yMax += 0.5*diff;
+	yMin -= 0.5*diff;
+
+	TH1D* hAxis = new TH1D("hAxis","",1000,xMin,xMax);
+	for(int i=0; i<1000; i++) hAxis->SetBinContent(i+1,1E9);
+	styleGraph(hAxis,0);
+
+	TCanvas* cOut = new TCanvas("cOut","",400,400);
+	gStyle->SetOptStat(0);
+	gStyle->SetErrorX(0.0001);
+	cOut->cd();
+	gPad->SetTicks(1,1);
+	gPad->SetTopMargin(0.075);
+	gPad->SetBottomMargin(0.1);
+	gPad->SetLeftMargin(0.125);
+	gPad->SetRightMargin(0.025);
+	hAxis->GetXaxis()->SetTitle("Centrality / %");
+	hAxis->GetXaxis()->SetTitleOffset(1.15);
+	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
+	if(iOpt==0) sprintf(name,"c_{%d}{2}",iV);
+	if(iOpt==1) sprintf(name,"c_{%d}{4}",iV);
+	if(iOpt==2) sprintf(name,"c_{%d}{6}",iV);
+	if(iOpt==3) sprintf(name,"v_{%d}{2}",iV);
+	if(iOpt==4) sprintf(name,"v_{%d}{4}",iV);
+	if(iOpt==5) sprintf(name,"v_{%d}{6}",iV);
+	if(iOpt==6)
+	{
+		if(iV==0) sprintf(name,"SC(2,3)");
+		if(iV==1) sprintf(name,"SC(2,4)");
+	}
+	if(iOpt==7) sprintf(name,"AC(2,2,4)");
+	if(iOpt==8)
+	{
+		if(iV==0) sprintf(name,"NSC(2,3)");
+		if(iV==1) sprintf(name,"NSC(2,4)");
+	}
+	if(iOpt==9) sprintf(name,"NAC(2,2,4)");
+	if(iOpt==10) sprintf(name,"v_{%d}{4} / v_{%d}{2}",iV,iV);
+	if(iOpt==11) sprintf(name,"v_{%d}{6} / v_{%d}{4}",iV,iV);
+	hAxis->GetYaxis()->SetTitle(name);
+	hAxis->GetYaxis()->SetTitleOffset(1.6);
+	hAxis->GetYaxis()->SetRangeUser(yMin,yMax);
+	if(iOpt==11) hAxis->GetYaxis()->SetRangeUser(0.95,1.05);
+	hAxis->Draw();
+	for(int iG=0; iG<NG; iG++) gSys[iG]->Draw("2");
+	for(int iG=0; iG<NG; iG++) gSts[iG]->Draw("P");
+	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[62]{Internal}");
+	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe and Pb+Pb}");
+	sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
+	tex->DrawLatex(0.175,0.76,name);
+	if(yMax>0 && yMin<0) lin->DrawLine(xMin,0,xMax,0);
+	if(iOpt==11) lin->DrawLine(xMin,1,xMax,1);
+	leg->Draw();
+
+	if(iOpt==0) sprintf(name,"../PLOT/bin%d/comp_c2_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==1) sprintf(name,"../PLOT/bin%d/comp_c4_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==2) sprintf(name,"../PLOT/bin%d/comp_c6_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==3) sprintf(name,"../PLOT/bin%d/comp_v2_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==4) sprintf(name,"../PLOT/bin%d/comp_v4_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==5) sprintf(name,"../PLOT/bin%d/comp_v6_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==6) sprintf(name,"../PLOT/bin%d/comp_sc_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==7) sprintf(name,"../PLOT/bin%d/comp_ac_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==8) sprintf(name,"../PLOT/bin%d/comp_nsc_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==9) sprintf(name,"../PLOT/bin%d/comp_nac_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==10) sprintf(name,"../PLOT/bin%d/comp_cr42_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	if(iOpt==11) sprintf(name,"../PLOT/bin%d/comp_cr64_Har%d_PtRef%d.pdf",iBin,iV,iR);
+	cOut->Print(name);
+	if(iOpt==0) sprintf(name,"comp_c2_Har%d_PtRef%d",iV,iR);
+	if(iOpt==1) sprintf(name,"comp_c4_Har%d_PtRef%d",iV,iR);
+	if(iOpt==2) sprintf(name,"comp_c6_Har%d_PtRef%d",iV,iR);
+	if(iOpt==3) sprintf(name,"comp_v2_Har%d_PtRef%d",iV,iR);
+	if(iOpt==4) sprintf(name,"comp_v4_Har%d_PtRef%d",iV,iR);
+	if(iOpt==5) sprintf(name,"comp_v6_Har%d_PtRef%d",iV,iR);
+	if(iOpt==6) sprintf(name,"comp_sc_Har%d_PtRef%d",iV,iR);
+	if(iOpt==7) sprintf(name,"comp_ac_Har%d_PtRef%d",iV,iR);
+	if(iOpt==8) sprintf(name,"comp_nsc_Har%d_PtRef%d",iV,iR);
+	if(iOpt==9) sprintf(name,"comp_nac_Har%d_PtRef%d",iV,iR);
+	if(iOpt==10) sprintf(name,"comp_cr42_Har%d_PtRef%d",iV,iR);
+	if(iOpt==11) sprintf(name,"comp_cr64_Har%d_PtRef%d",iV,iR);
+	cOut->SetName(name);
+	cOut->Write();
+
+	delete hAxis;
+	delete cOut;
+}
+
+
 void Plot::styleGraph(TGraph* hIn, int k)
 {
 	hIn->SetTitle("");
@@ -396,7 +724,7 @@ void Plot::getYrange(TGraph* hIn, double& yMin, double& yMax, int iOpt)
 	{
 		hIn->GetPoint(i,x,y);
 		if(iOpt!=5 && x>60) continue;
-		if(iOpt==5 && x>10) continue;
+		else if(iOpt==5 && x>10) continue;
 		if(y<yMin) yMin = y;
 		if(y>yMax) yMax = y;
 	}

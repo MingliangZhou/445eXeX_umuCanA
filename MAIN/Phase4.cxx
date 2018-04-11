@@ -186,7 +186,7 @@ void Phase4::finalize(unsigned int iBin)
 {
 	cout<<"finalize..."<<endl;
 
-	sprintf(name,"../OUTPUT/Phase4/hist_PbPb502_binCent_bin%d.root",iBin);
+	sprintf(name,"../OUTPUT/Phase4/hist_XeXe544_binCent_bin%d.root",iBin);
 	TFile* fOut = new TFile(name,"RECREATE");
 	fOut->cd();
 	for(unsigned int iV=0; iV<NV; iV++)

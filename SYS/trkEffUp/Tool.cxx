@@ -92,7 +92,7 @@ double Tool::detTrkEff(double cent, double pt, double eta)
 	double fcalEt = (cutCent[80-int(cent)]+cutCent[80-int(cent)+1])/2;
 
 	if(pt<=0.5) return 0.4; // FIX
-	if(pt>=10) return 0.75; // FIX
+	if(pt>=20) return 0.75; // FIX
 
 	int tagFcalEt = 0;
 	int tagPt = 0;
@@ -131,7 +131,7 @@ double Tool::detTrkFak(double cent, double pt, double eta)
 	double fcalEt = (cutCent[80-int(cent)]+cutCent[80-int(cent)+1])/2;
 	
 	if(pt<=0.5) return 0; // FIX
-	if(pt>=10) return 0; // FIX
+	if(pt>=20) return 0; // FIX
 
 	int tagFcalEt = 0;
 	int tagPt = 0;

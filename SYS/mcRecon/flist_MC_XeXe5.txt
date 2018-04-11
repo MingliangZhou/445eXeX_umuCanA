@@ -1,0 +1,9 @@
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.00_myaod.root/user.mizhou.13658138._000001.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.00_myaod.root/user.mizhou.13658138._000002.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.00_myaod.root/user.mizhou.13658138._000003.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.01_myaod.root/user.mizhou.13658143._000001.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.01_myaod.root/user.mizhou.13658143._000002.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.02_myaod.root/user.mizhou.13658149._000001.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.03_myaod.root/user.mizhou.13658153._000001.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.03_myaod.root/user.mizhou.13658153._000002.myaod.root*
+/star/data01/pwg/jjia/MC_XeXe544/user.mizhou.mc16_HIJING.XeXe.MB.Apr06.04_myaod.root/user.mizhou.13658157._000001.myaod.root*
