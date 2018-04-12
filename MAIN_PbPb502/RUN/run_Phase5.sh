@@ -1,10 +1,10 @@
 #!/bin/sh
 
-for ((I1=0;I1<1;I1+=1))
+for ((I1=0;I1<2;I1+=1))
 do
 root -b -l <<EOF
-.L ../Plot.cxx+
-Plot()
+.L ../Phase5.cxx+
+Phase5($I1)
 .q
 EOF
 done
