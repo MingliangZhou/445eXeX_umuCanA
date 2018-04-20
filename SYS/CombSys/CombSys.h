@@ -3,14 +3,16 @@
 
 #include "../default/Rule.h"
 
-const unsigned int NS = 7; // number of systematic sources
+const unsigned int NS = 9; // number of systematic sources
 // 0: default for statistical errors
 // 1: low tracking efficiency
 // 2: high tracking efficiency
 // 3: tight track selection
-// 4: loose pileup rejection
+// 4: loose pileup rejection -> centrality definition Up
 // 5: MC closure
-// 6: no flattening
+// 6: no flattening -> event mixing Up
+// 7: centrality definition Lw
+// 8: event mixing Lw
 
 class CombSys
 {
@@ -121,6 +123,7 @@ class CombSys
 		void smooth_ratio(TGraphErrors* gRatio, int iB, double percent);
 		void reduce_ratio(TGraphErrors* gRatio, int iB, double percent);
 		void cal_comb(vector<TGraphErrors*> gVec, TGraphErrors*& gSysUp, TGraphErrors*& gSysLw, const char*, int iV, int iR, int iC=-1);
+		void set_sys(TGraphErrors* gRatio, double sys1, double sys2=0);
 		void smooth();
 
 	public:

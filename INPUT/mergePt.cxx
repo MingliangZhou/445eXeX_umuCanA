@@ -7,7 +7,7 @@
 
 void mergePt()
 {
-	TFile* fIn = new TFile("trkEff_XeXe.root","READ");
+	TFile* fIn = new TFile("fix-trksel-eff-HILOOSE.root","READ");
 
 	TH3D* allTrue = (TH3D*)fIn->Get("allTrue"); allTrue->SetName("old_allTrue");
 	TH3D* allReco = (TH3D*)fIn->Get("allReco"); allReco->SetName("old_allReco");
@@ -118,7 +118,7 @@ void mergePt()
 		}
 	}
 
-	TFile* fOut = new TFile("trkEff.root","RECREATE");
+	TFile* fOut = new TFile("trkEff_HILOOSE.root","RECREATE");
 	fOut->cd();
 	new_allTrue->Write();
 	new_allReco->Write();

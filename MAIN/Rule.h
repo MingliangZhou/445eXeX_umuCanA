@@ -38,11 +38,15 @@ const double cutQual = 1;
 const unsigned int nBin = 80;
 const double minBin = 0;
 const double maxBin = 80;
-const unsigned int nRebin[2] = {24,11};
-const double xRebin[2][25] = 
+const unsigned int nRebin[2] = {20,16}; // 24, 11
+const double xRebin[2][21] = // 25
 {
+	{0, 1, 2, 3, 4, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80},
+	{0, 5,10,15,20,25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95,100}
+/*
 	{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,12,14,16,18,20,25,30,35,40,45,50,60,70,80},
 	{ 0, 2, 4, 6, 8,10,15,20,30,40,60,80,81,82,83,84,85,86,87,88,89,90,91,92,93}
+*/
 };
 
 const unsigned int nCent = 6; // for pT measurements

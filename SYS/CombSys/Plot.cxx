@@ -355,13 +355,25 @@ void Plot::finalize()
 void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOpt, unsigned int iBin)
 {
 	int NG = vIn.size();
-	TGraphErrors* gIn[10];
+	TGraphErrors* gIn[15];
 	for(int iG=0; iG<NG; iG++)
 	{
 		gIn[iG] = (TGraphErrors*)vIn.at(iG)->Clone("gIn");
 		if(iG==0) styleGraph(gIn[iG],0);
 		else styleGraph(gIn[iG],iG-1);
 	}
+	styleGraph(gIn[0],0);
+	styleGraph(gIn[1],0);
+	styleGraph(gIn[2],0);
+	styleGraph(gIn[3],1);
+	styleGraph(gIn[4],2);
+	styleGraph(gIn[5],3);
+	//styleGraph(gIn[6],4);
+	styleGraph(gIn[7],2);
+	//styleGraph(gIn[8],4);
+	styleGraph(gIn[9],0);
+	styleGraph(gIn[10],0);
+
 	for(int iG=1; iG<NG; iG++)
 	{
 		for(int iB=0; iB<gIn[0]->GetN(); iB++) gIn[iG]->SetPointError(iB,0,0);
@@ -384,13 +396,12 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	leg->SetBorderSize(0);
 	leg->SetNColumns(3);
 	leg->AddEntry(gIn[0],"#font[42]{stat. err}","f");
-	leg->AddEntry(gIn[1],"#font[42]{lower eff.}","p");
-	leg->AddEntry(gIn[2],"#font[42]{higher eff.}","p");
+	leg->AddEntry(gIn[1],"#font[42]{track eff.}","p");
 	leg->AddEntry(gIn[3],"#font[42]{tight sel.}","p");
-	leg->AddEntry(gIn[4],"#font[42]{pileup}","p");
+	leg->AddEntry(gIn[4],"#font[42]{cent. def.}","p");
 	leg->AddEntry(gIn[5],"#font[42]{MC closure}","p");
-	leg->AddEntry(gIn[6],"#font[42]{flattening}","p");
-	leg->AddEntry(gIn[7],"#font[42]{Combined}","L");
+	//leg->AddEntry(gIn[6],"#font[42]{event mix}","p");
+	leg->AddEntry(gIn[9],"#font[42]{Combined}","L");
 
 	double xMin =  0;
 	double xMax =  80;
@@ -429,8 +440,8 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	if(iOpt==0) sprintf(name,"c_{%d}{2}",iV);
 	if(iOpt==1) sprintf(name,"c_{%d}{4}",iV);
 	if(iOpt==2) sprintf(name,"c_{%d}{6}",iV);
-	if(iOpt==3) sprintf(name,"#hat{c}_{%d}{4}",iV);
-	if(iOpt==4) sprintf(name,"#hat{c}_{%d}{6}",iV);
+	if(iOpt==3) sprintf(name,"nc_{%d}{4}",iV);
+	if(iOpt==4) sprintf(name,"nc_{%d}{6}",iV);
 	if(iOpt==5) sprintf(name,"v_{%d}{2}",iV);
 	if(iOpt==6) sprintf(name,"v_{%d}{4}",iV);
 	if(iOpt==7) sprintf(name,"v_{%d}{6}",iV);
@@ -438,21 +449,21 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	if(iOpt==9) sprintf(name,"v_{%d}{6} / v_{%d}{4}",iV,iV);
 	if(iOpt==10)
 	{
-		if(iV==0) sprintf(name,"SC(2,3)");
-		if(iV==1) sprintf(name,"SC(2,4)");
+		if(iV==0) sprintf(name,"sc_{2,3}{4}");
+		if(iV==1) sprintf(name,"sc_{2,4}{4}");
 	}
 	if(iOpt==11)
 	{
-		if(iV==0) sprintf(name,"NSC(2,3)");
-		if(iV==1) sprintf(name,"NSC(2,4)");
+		if(iV==0) sprintf(name,"nsc_{2,3}{4}");
+		if(iV==1) sprintf(name,"nsc_{2,4}{4}");
 	}
 	if(iOpt==12)
 	{
-		if(iV==2) sprintf(name,"AC(2,2,4)");
+		if(iV==2) sprintf(name,"ac_{2,4}{3}");
 	}
 	if(iOpt==13)
 	{
-		if(iV==2) sprintf(name,"NAC(2,2,4)");
+		if(iV==2) sprintf(name,"nac_{2,4}{3}");
 	}
 	if(iOpt==14) sprintf(name,"v_{%d}'{2}",iV);
 	if(iOpt==15) sprintf(name,"v_{%d}'{4}",iV);
@@ -463,7 +474,11 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	gIn[0]->SetFillColor(1);
 	gIn[0]->SetFillStyle(3004);
 	gIn[0]->Draw("E3");
-	for(int iG=1; iG<NG-2; iG++) gIn[iG]->Draw("PL");
+	for(int iG=1; iG<NG-2; iG++)
+	{
+		if(iG==6 || iG==8) continue;
+		gIn[iG]->Draw("PL");
+	}
 	gIn[NG-2]->Draw("L");
 	gIn[NG-1]->Draw("L");
 	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[62]{Internal}");

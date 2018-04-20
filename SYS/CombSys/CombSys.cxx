@@ -54,6 +54,52 @@ void CombSys::execute()
 
 	smooth();
 
+	for(unsigned int iR=0; iR<NR; iR++)
+	{
+		for(unsigned int iV=0; iV<NV; iV++)
+		{
+			// centrality definition
+			set_sys(ratio_c2_1sub[4][iV][iR], +2); set_sys(ratio_c2_1sub[7][iV][iR], -2);
+			set_sys(ratio_c4_1sub[4][iV][iR], +4); set_sys(ratio_c4_1sub[7][iV][iR], -4);
+			set_sys(ratio_c6_1sub[4][iV][iR], +6); set_sys(ratio_c6_1sub[7][iV][iR], -6);
+			set_sys(ratio_v2_3sub[4][iV][iR], +1); set_sys(ratio_v2_3sub[7][iV][iR], -1);
+			set_sys(ratio_v4_1sub[4][iV][iR], +1); set_sys(ratio_v4_1sub[7][iV][iR], -1);
+			set_sys(ratio_v6_1sub[4][iV][iR], +1); set_sys(ratio_v6_1sub[7][iV][iR], -1);
+			set_sys(ratio_cr42_1sub[4][iV][iR], +0); set_sys(ratio_cr42_1sub[7][iV][iR], -0);
+			set_sys(ratio_cr64_1sub[4][iV][iR], +0); set_sys(ratio_cr64_1sub[7][iV][iR], -0);
+			set_sys(ratio_sc_1sub[4][iV][iR], +4); set_sys(ratio_sc_1sub[7][iV][iR], -4);
+			set_sys(ratio_ac_1sub[4][iV][iR], +4); set_sys(ratio_ac_1sub[7][iV][iR], -4);
+			set_sys(ratio_nsc_1sub[4][iV][iR], +4); set_sys(ratio_nsc_1sub[7][iV][iR], -4);
+			set_sys(ratio_nac_1sub[4][iV][iR], +4); set_sys(ratio_nac_1sub[7][iV][iR], -4);
+			for(unsigned int iC=0; iC<nCent; iC++)
+			{
+				set_sys(ratio_vd2_1sub[4][iV][iR][iC], +1, +1); set_sys(ratio_vd2_1sub[7][iV][iR][iC], -1, -1);
+				set_sys(ratio_vd4_1sub[4][iV][iR][iC], +1, +1); set_sys(ratio_vd4_1sub[7][iV][iR][iC], -1, -1);
+			}
+
+			// event mixing
+			/*
+			set_sys(ratio_c2_1sub[6][iV][iR], +2); set_sys(ratio_c2_1sub[8][iV][iR], -2);
+			set_sys(ratio_c4_1sub[6][iV][iR], +4); set_sys(ratio_c4_1sub[8][iV][iR], -4);
+			set_sys(ratio_c6_1sub[6][iV][iR], +6); set_sys(ratio_c6_1sub[8][iV][iR], -6);
+			set_sys(ratio_v2_3sub[6][iV][iR], +1); set_sys(ratio_v2_3sub[8][iV][iR], -1);
+			set_sys(ratio_v4_1sub[6][iV][iR], +1); set_sys(ratio_v4_1sub[8][iV][iR], -1);
+			set_sys(ratio_v6_1sub[6][iV][iR], +1); set_sys(ratio_v6_1sub[8][iV][iR], -1);
+			set_sys(ratio_cr42_1sub[6][iV][iR], +1); set_sys(ratio_cr42_1sub[8][iV][iR], -1);
+			set_sys(ratio_cr64_1sub[6][iV][iR], +1); set_sys(ratio_cr64_1sub[8][iV][iR], -1);
+			set_sys(ratio_sc_1sub[6][iV][iR], +4); set_sys(ratio_sc_1sub[8][iV][iR], -4);
+			set_sys(ratio_ac_1sub[6][iV][iR], +4); set_sys(ratio_ac_1sub[8][iV][iR], -4);
+			set_sys(ratio_nsc_1sub[6][iV][iR], +4); set_sys(ratio_nsc_1sub[8][iV][iR], -4);
+			set_sys(ratio_nac_1sub[6][iV][iR], +4); set_sys(ratio_nac_1sub[8][iV][iR], -4);
+			for(unsigned int iC=0; iC<nCent; iC++)
+			{
+				set_sys(ratio_vd2_1sub[6][iV][iR][iC], +1, +3); set_sys(ratio_vd2_1sub[8][iV][iR][iC], -1, -3);
+				set_sys(ratio_vd4_1sub[6][iV][iR][iC], +1, +3); set_sys(ratio_vd4_1sub[8][iV][iR][iC], -1, -3);
+			}
+			*/
+		}
+	}
+
 	vector<TGraphErrors*> gVec;
 	for(unsigned int iV=0; iV<NV; iV++)
 	{
@@ -153,7 +199,9 @@ void CombSys::initialize(unsigned int iBin)
 			if(iF==0 && iS==3) sprintf(name,"../../trkSel/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==4) sprintf(name,"../../pileup/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==5) sprintf(name,"../../mcTruth/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
-			if(iF==0 && iS==6) sprintf(name,"../../flat/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
+			if(iF==0 && iS==6) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin); // no flattening systematics
+			if(iF==0 && iS==7) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
+			if(iF==0 && iS==8) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 
 			if(iF==1 && iS==0) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==1 && iS==1) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
@@ -162,6 +210,8 @@ void CombSys::initialize(unsigned int iBin)
 			if(iF==1 && iS==4) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==1 && iS==5) sprintf(name,"../../mcRecon/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==1 && iS==6) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
+			if(iF==1 && iS==7) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
+			if(iF==1 && iS==8) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 
 			fIn[iF][iS] = new TFile(name,"READ");
 
@@ -475,6 +525,20 @@ void CombSys::readHist_VRC(TFile* fIn, TGraphErrors*& hIn, const char* hName, co
 	hIn->SetName(name);
 }
 
+void CombSys::set_sys(TGraphErrors* gRatio, double sys1, double sys2)
+{
+	int NX = gRatio->GetN();
+	for(int iX=0; iX<NX; iX++)
+	{
+		double x = 0;
+		double y = 0;
+		gRatio->GetPoint(iX,x,y);
+		if(sys2!=0 && x>=9) y = sys2;
+		else y = sys1;
+		gRatio->SetPoint(iX,x,y/100);
+	}
+}
+
 void CombSys::smooth()
 {
 	// special smoothing for MC closure
@@ -502,6 +566,11 @@ void CombSys::smooth()
 					{
 						reduce_ratio(ratio_vd4_1sub[iS][iV][iR][iC],iB,0.5);
 					}
+				}
+				for(unsigned int iC=0; iC<nCent; iC++)
+				{
+					reduce_ratio(ratio_vd2_1sub[iS][iV][iR][iC],5,0.2);
+					reduce_ratio(ratio_vd4_1sub[iS][iV][iR][iC],5,0.2);
 				}
 			}
 		}

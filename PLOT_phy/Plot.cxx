@@ -18,6 +18,30 @@ void Plot::execute()
 {
 	cout<<"execute..."<<endl;
 
+	// Remove Points for paper
+	///*
+	for(int i=sts_cr64_1sub[0][0][2][0]->GetN()-1; i>=22; i--)
+	{
+		sts_cr64_1sub[0][0][2][0]->RemovePoint(i);
+		sys_cr64_1sub[0][0][2][0]->RemovePoint(i);
+	}
+	for(int i=0; i<10; i++)
+	{
+		sts_cr64_1sub[0][0][2][0]->RemovePoint(0);
+		sys_cr64_1sub[0][0][2][0]->RemovePoint(0);
+	}
+	
+	for(int i=sts_cr64_1sub[1][0][2][0]->GetN()-1; i>=23; i--)
+	{
+		sts_cr64_1sub[1][0][2][0]->RemovePoint(i);
+		sys_cr64_1sub[1][0][2][0]->RemovePoint(i);
+	}
+	for(int i=0; i<5; i++)
+	{
+		sts_cr64_1sub[1][0][2][0]->RemovePoint(0);
+		sys_cr64_1sub[1][0][2][0]->RemovePoint(0);
+	}
+
 	for(int i=sts_vd4_1sub[0][0][3][0][0]->GetN()-1; i>=7; i--)
 	{
 		sts_vd4_1sub[0][0][3][0][0]->RemovePoint(i);
@@ -38,6 +62,7 @@ void Plot::execute()
 		sts_vd4_1sub[0][0][3][0][5]->RemovePoint(i);
 		sys_vd4_1sub[0][0][3][0][5]->RemovePoint(i);
 	}
+	//*/
 
 	TFile* fOut = new TFile("../PLOT/canvas.root","RECREATE");
 	fOut->cd();
@@ -356,8 +381,8 @@ void Plot::initialize()
 	{
 		for(unsigned int iB=0; iB<2; iB++)
 		{
-			if(iF==0) sprintf(name,"../../MAIN/OUTPUT/Phase5/hist_XeXe544_binCent_bin%d.root",iB); // Phase
-			if(iF==1) sprintf(name,"../../MAIN_PbPb502/OUTPUT/Phase5/hist_PbPb502_binCent_bin%d.root",iB); // Phase
+			if(iF==0) sprintf(name,"../../MAIN/OUTPUT/Phase4/hist_XeXe544_binCent_bin%d.root",iB); // Phase
+			if(iF==1) sprintf(name,"../../MAIN_PbPb502/OUTPUT/Phase4/hist_PbPb502_binCent_bin%d.root",iB); // Phase
 			fIn[iF][iB] = new TFile(name,"READ");
 			for(unsigned int iV=0; iV<NV; iV++)
 			{
@@ -632,12 +657,14 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 		gSys[iG]->SetFillStyle(3001);
 		for(int i=0; i<gSys[iG]->GetN(); i++)
 		{
-		/*
+		///*
 			gSys[iG]->SetPointEXhigh(i,1); // Phase4
 			gSys[iG]->SetPointEXlow(i,1); // Phase4
-		*/
+		//*/
+		/*
 			gSys[iG]->SetPointEXhigh(i,5); // Phase5
 			gSys[iG]->SetPointEXlow(i,5); // Phase5
+		*/
 		}
 	}
 
@@ -659,8 +686,8 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	leg->AddEntry(gSts[1],"Pb+Pb 5.02 TeV","p");
 
 	double xMin =  0;
-	//double xMax = 80; // Phase4
-	double xMax = 405; // Phaes5
+	double xMax = 80; // Phase4
+	//double xMax = 405; // Phase5
 	double yMin =  1;
 	double yMax = -1;
 	for(int iG=0; iG<NG; iG++) getYrange(gSts[iG],yMin,yMax,0);
@@ -681,8 +708,8 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	gPad->SetBottomMargin(0.1);
 	gPad->SetLeftMargin(0.125);
 	gPad->SetRightMargin(0.025);
-	//hAxis->GetXaxis()->SetTitle("Centrality / %"); // Phase4
-	hAxis->GetXaxis()->SetTitle("N_{part}"); // Phase5
+	hAxis->GetXaxis()->SetTitle("Centrality / %"); // Phase4
+	//hAxis->GetXaxis()->SetTitle("N_{part}"); // Phase5
 	hAxis->GetXaxis()->SetTitleOffset(1.15);
 	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
 	if(iOpt==0) sprintf(name,"c_{%d}{2}",iV);
@@ -791,8 +818,8 @@ void Plot::getYrange(TGraph* hIn, double& yMin, double& yMax, int iOpt)
 	for(int i=0; i<hIn->GetN(); i++)
 	{
 		hIn->GetPoint(i,x,y);
-		//if(iOpt!=5 && x>60) continue; // Phase4
-		if(iOpt!=5 && x<30) continue; // Phase5
+		if(iOpt!=5 && x>60) continue; // Phase4
+		//if(iOpt!=5 && x<30) continue; // Phase5
 		else if(iOpt==5 && x>10) continue;
 		if(y<yMin) yMin = y;
 		if(y>yMax) yMax = y;
