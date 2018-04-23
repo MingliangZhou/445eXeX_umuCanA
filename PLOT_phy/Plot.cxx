@@ -3,6 +3,15 @@
 const double plot_yMin[] = {   0, -11e-6, -1, 0.4, 0.95,    0};
 const double plot_yMax[] = {0.15,  14e-6,  2, 1.0, 1.04, 0.34};
 
+const double graph_leg[6][4] = {
+{0.8,   0.68,   0.95,  0.9 },
+{0.125, 0.125,  0.95,  0.25},
+{0.125, 0.125,  0.95,  0.25},
+{0.125, 0.125,  0.95,  0.25},
+{0.125, 0.125,  0.95,  0.25},
+{0.8,   0.72,   0.95,  0.9}
+};
+
 Plot::Plot()
 {
 	initialize();
@@ -20,6 +29,11 @@ void Plot::execute()
 
 	// Remove Points for paper
 	///*
+	for(int i=sts_nsc_1sub[0][0][1][0]->GetN()-1; i>=22; i--)
+	{
+		sts_nsc_1sub[0][0][1][0]->RemovePoint(i);
+		sys_nsc_1sub[0][0][1][0]->RemovePoint(i);
+	}
 	for(int i=sts_cr64_1sub[0][0][2][0]->GetN()-1; i>=22; i--)
 	{
 		sts_cr64_1sub[0][0][2][0]->RemovePoint(i);
@@ -70,23 +84,19 @@ void Plot::execute()
 	vector<TGraphAsymmErrors*> vSys;
 
 	// 0: v{2}, v{4}, v{6}
-	for(unsigned int iV=2; iV<4; iV++)
+	for(unsigned int iR=0; iR<1; iR++)
 	{
-		for(unsigned int iR=0; iR<1; iR++)
-		{
-			vSts.push_back(sts_v2_3sub[0][0][iV][iR]);
-			if(iV==2) vSts.push_back(sts_v4_1sub[0][0][iV][iR]);
-			if(iV==3) vSts.push_back(sts_v4_1sub[0][1][iV][iR]);
-			if(iV==2) vSts.push_back(sts_v6_1sub[0][0][iV][iR]);
-			vSys.push_back(sys_v2_3sub[0][0][iV][iR]);
-			if(iV==2) vSys.push_back(sys_v4_1sub[0][0][iV][iR]);
-			if(iV==3) vSys.push_back(sys_v4_1sub[0][1][iV][iR]);
-			if(iV==2) vSys.push_back(sys_v6_1sub[0][0][iV][iR]);
-			draw_graph(vSts,vSys,iV,iR,-1,0);
-			vSts.clear();
-			vSys.clear();
-		}
+		vSts.push_back(sts_v4_1sub[0][0][2][iR]);
+		vSts.push_back(sts_v6_1sub[0][0][2][iR]);
+		vSts.push_back(sts_v4_1sub[0][1][3][iR]);
+		vSys.push_back(sys_v4_1sub[0][0][2][iR]);
+		vSys.push_back(sys_v6_1sub[0][0][2][iR]);
+		vSys.push_back(sys_v4_1sub[0][1][3][iR]);
+		draw_graph(vSts,vSys,-1,iR,-1,0);
+		vSts.clear();
+		vSys.clear();
 	}
+
 
 	// 1: SC(2,3), SC(2,4), AC(2,2,4)
 	for(unsigned int iR=0; iR<1; iR++)
@@ -143,20 +153,17 @@ void Plot::execute()
 	}
 	
 	// 5: vd2, vd4
-	for(unsigned int iV=2; iV<4; iV++)
+	for(unsigned int iR=0; iR<1; iR++)
 	{
-		for(unsigned int iR=0; iR<1; iR++)
+		for(unsigned int iC=0; iC<nCent; iC++)
 		{
-			for(unsigned int iC=0; iC<nCent; iC++)
-			{
-				vSts.push_back(sts_vd2_1sub[0][0][iV][iR][iC]);
-				vSts.push_back(sts_vd4_1sub[0][0][iV][iR][iC]);
-				vSys.push_back(sys_vd2_1sub[0][0][iV][iR][iC]);
-				vSys.push_back(sys_vd4_1sub[0][0][iV][iR][iC]);
-				draw_graph(vSts,vSys,iV,iR,iC,5);
-				vSts.clear();
-				vSys.clear();
-			}
+			vSts.push_back(sts_vd4_1sub[0][0][2][iR][iC]);
+			vSts.push_back(sts_vd4_1sub[0][0][3][iR][iC]);
+			vSys.push_back(sys_vd4_1sub[0][0][2][iR][iC]);
+			vSys.push_back(sys_vd4_1sub[0][0][3][iR][iC]);
+			draw_graph(vSts,vSys,-1,iR,iC,5);
+			vSts.clear();
+			vSys.clear();
 		}
 	}
 
@@ -381,7 +388,7 @@ void Plot::initialize()
 	{
 		for(unsigned int iB=0; iB<2; iB++)
 		{
-			if(iF==0) sprintf(name,"../../MAIN/OUTPUT/Phase4/hist_XeXe544_binCent_bin%d.root",iB); // Phase
+			if(iF==0) sprintf(name,"../../MAIN_norm2PC/OUTPUT/Phase4/hist_XeXe544_binCent_bin%d.root",iB); // Phase
 			if(iF==1) sprintf(name,"../../MAIN_PbPb502/OUTPUT/Phase4/hist_PbPb502_binCent_bin%d.root",iB); // Phase
 			fIn[iF][iB] = new TFile(name,"READ");
 			for(unsigned int iV=0; iV<NV; iV++)
@@ -522,22 +529,20 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	lin->SetLineColor(1);
 	lin->SetLineStyle(2);
 	lin->SetLineWidth(2);
-	TLegend* leg = new TLegend(0.15,0.125,0.95,0.25);
+	TLegend* leg = new TLegend(graph_leg[iOpt][0],graph_leg[iOpt][1],graph_leg[iOpt][2],graph_leg[iOpt][3]);
 	leg->SetTextSize(0.05);
 	leg->SetFillStyle(0);
 	leg->SetBorderSize(0);
-	leg->SetNColumns(3);
+	if(iOpt==0 || iOpt==5) leg->SetNColumns(1);
+	else leg->SetNColumns(3);
 	if(iOpt==0)
 	{
-		sprintf(name,"v_{%d}{2}",iV);
+		sprintf(name,"v_{%d}{4}",2);
 		leg->AddEntry(gSts[0],name,"p");
-		sprintf(name,"v_{%d}{4}",iV);
+		sprintf(name,"v_{%d}{6}",2);
 		leg->AddEntry(gSts[1],name,"p");
-		if(iV==2)
-		{
-			sprintf(name,"v_{%d}{6}",iV);
-			leg->AddEntry(gSts[2],name,"p");
-		}
+		sprintf(name,"v_{%d}{4}",3);
+		leg->AddEntry(gSts[2],name,"p");
 	}
 	if(iOpt==1)
 	{
@@ -553,9 +558,9 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	}
 	if(iOpt==5)
 	{
-		sprintf(name,"v_{%d}'{2}",iV);
+		sprintf(name,"n=%d",2);
 		leg->AddEntry(gSts[0],name,"p");
-		sprintf(name,"v_{%d}'{4}",iV);
+		sprintf(name,"n=%d",3);
 		leg->AddEntry(gSts[1],name,"p");
 	}
 
@@ -595,46 +600,47 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	gPad->SetLeftMargin(0.125);
 	gPad->SetRightMargin(0.025);
 	if(iOpt!=5) hAxis->GetXaxis()->SetTitle("Centrality / %");
-	if(iOpt==5) hAxis->GetXaxis()->SetTitle("p_{T} / GeV");
+	if(iOpt==5) hAxis->GetXaxis()->SetTitle("p_{T} [GeV]");
 	hAxis->GetXaxis()->SetTitleOffset(1.15);
 	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
-	if(iOpt==0) sprintf(name,"v_{%d}",iV);
+	if(iOpt==0) sprintf(name,"v_{n}{2k}");
 	if(iOpt==1) sprintf(name,"corr(v_{n},v_{m})");
 	if(iOpt==2) sprintf(name,"corr(v_{n},v_{m})");
 	if(iOpt==3) sprintf(name,"v_{%d}{4} / v_{%d}{2}",iV,iV);
 	if(iOpt==4) sprintf(name,"v_{%d}{6} / v_{%d}{4}",iV,iV);
-	if(iOpt==5) sprintf(name,"v_{%d}'",iV);
+	if(iOpt==5) sprintf(name,"v_{n}{4}");
 	hAxis->GetYaxis()->SetTitle(name);
 	hAxis->GetYaxis()->SetTitleOffset(1.6);
 	hAxis->GetYaxis()->SetRangeUser(yMin,yMax);
 	//hAxis->GetYaxis()->SetRangeUser(plot_yMin[iOpt],plot_yMax[iOpt]);
 	//if(iV==3) hAxis->GetYaxis()->SetRangeUser(plot_yMin[iOpt]/2,plot_yMax[iOpt]/2);
 	if(iOpt==4) hAxis->GetYaxis()->SetRangeUser(0.95,1.05);
+	if(iOpt==5) hAxis->GetYaxis()->SetRangeUser(0,0.22);
 	hAxis->Draw();
 	for(int iG=0; iG<NG; iG++) gSys[iG]->Draw("2");
 	for(int iG=0; iG<NG; iG++) gSts[iG]->Draw("P");
-	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[62]{Internal}");
-	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe #sqrt{s_{NN}}=5.44 TeV}");
+	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[42]{Internal}");
+	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe #sqrt{#it{s}_{NN}}=5.44 TeV, 3 #mub^{-1}}");
 	if(iOpt!=5) sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
-	if(iOpt==5) sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV   (%d,%d)}",minPtRef[iR],maxPtRef[iR],int(xCent[iC]),int(xCent[iC+1]));
+	if(iOpt==5) sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV   (%d-%d)%%}",minPtRef[iR],maxPtRef[iR],int(xCent[iC]),int(xCent[iC+1]));
 	tex->DrawLatex(0.175,0.76,name);
 	if(yMax>0 && yMin<0) lin->DrawLine(xMin,0,xMax,0);
 	if(iOpt==4) lin->DrawLine(xMin,1,xMax,1);
 	leg->Draw();
 
-	if(iOpt==0) sprintf(name,"../PLOT/v_Har%d_PtRef%d.pdf",iV,iR);
+	if(iOpt==0) sprintf(name,"../PLOT/v_PtRef%d.pdf",iR);
 	if(iOpt==1) sprintf(name,"../PLOT/sc_PtRef%d.pdf",iR);
 	if(iOpt==2) sprintf(name,"../PLOT/nsc_PtRef%d.pdf",iR);
 	if(iOpt==3) sprintf(name,"../PLOT/cr42_Har%d_PtRef%d.pdf",iV,iR);
 	if(iOpt==4) sprintf(name,"../PLOT/cr64_Har%d_PtRef%d.pdf",iV,iR);
-	if(iOpt==5) sprintf(name,"../PLOT/vd_Har%d_PtRef%d_Cent%d.pdf",iV,iR,iC);
+	if(iOpt==5) sprintf(name,"../PLOT/vd_PtRef%d_Cent%d.pdf",iR,iC);
 	cOut->Print(name);
 	if(iOpt==0) sprintf(name,"v_Har%d_PtRef%d",iV,iR);
 	if(iOpt==1) sprintf(name,"sc_PtRef%d",iR);
 	if(iOpt==2) sprintf(name,"nsc_PtRef%d",iR);
 	if(iOpt==3) sprintf(name,"cr42_Har%d_PtRef%d",iV,iR);
 	if(iOpt==4) sprintf(name,"cr64_Har%d_PtRef%d",iV,iR);
-	if(iOpt==5) sprintf(name,"vd_Har%d_PtRef%d_Cent%d",iV,iR,iC);
+	if(iOpt==5) sprintf(name,"vd_PtRef%d_Cent%d",iR,iC);
 	cOut->SetName(name);
 	cOut->Write();
 
@@ -740,7 +746,7 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	hAxis->Draw();
 	for(int iG=0; iG<NG; iG++) gSys[iG]->Draw("2");
 	for(int iG=0; iG<NG; iG++) gSts[iG]->Draw("P");
-	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[62]{Internal}");
+	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[42]{Internal}");
 	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe and Pb+Pb}");
 	sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
 	tex->DrawLatex(0.175,0.76,name);

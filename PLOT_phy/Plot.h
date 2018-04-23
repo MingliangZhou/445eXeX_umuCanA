@@ -8,11 +8,19 @@
 #include "TLegend.h"
 #include "TStyle.h"
 #include "TLine.h"
+///* 2PC style 
+const int mS[8] = {kFullCircle,kOpenCircle,kOpenSquare,kOpenDiamond,29,22,23,27};
+const int mC[8] = {kBlack, kRed, kGreen+2, kYellow+2, kMagenta+2, kCyan+2, kOrange+2, 1};
+const int lS[8] = { 1, 1, 1, 1, 1, 1, 1, 1};
+const int lC[8] = {kBlack, kRed, kGreen+2, kYellow+2, kMagenta+2, kCyan+2, kOrange+2, 1};
+//*/
 
+/* my stype
 const int mS[8] = {20,21,33,34,29,22,23,27};
 const int mC[8] = {kBlue+2, kRed+2, kGreen+2, kYellow+2, kMagenta+2, kCyan+2, kOrange+2, 1};
 const int lS[8] = { 1, 1, 1, 1, 1, 1, 1, 1};
 const int lC[8] = {kBlue+2, kRed+2, kGreen+2, kYellow+2, kMagenta+2, kCyan+2, kOrange+2, 1};
+*/
 
 const unsigned int NF = 2;
 
