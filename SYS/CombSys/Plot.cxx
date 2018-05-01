@@ -18,6 +18,44 @@ void Plot::execute(unsigned int iBin)
 	sprintf(name,"../PLOT/bin%d/canvas.root",iBin);
 	TFile* fOut = new TFile(name,"RECREATE");
 	fOut->cd();
+
+	// 0: v4_1sub
+	for(unsigned int iS=1; iS<NS; iS++)
+	{
+		for(unsigned int iV=2; iV<4; iV++)
+		{
+			for(unsigned int iR=0; iR<1; iR++)
+			{
+				draw_sepa(v4_1sub[1][iS][iV][iR],v4_1sub[0][iS][iV][iR],ratio_v4_1sub[iS][iV][iR],iS,iV,iR,0,iBin);
+			}
+		}
+	}
+
+	// 1: nsc_1sub
+	for(unsigned int iS=1; iS<NS; iS++)
+	{
+		for(unsigned int iV=0; iV<2; iV++)
+		{
+			for(unsigned int iR=0; iR<1; iR++)
+			{
+				draw_sepa(nsc_1sub[1][iS][iV][iR],nsc_1sub[0][iS][iV][iR],ratio_nsc_1sub[iS][iV][iR],iS,iV,iR,1,iBin);
+			}
+		}
+	}
+
+	// 2: nac_1sub
+	for(unsigned int iS=1; iS<NS; iS++)
+	{
+		for(unsigned int iV=2; iV<3; iV++)
+		{
+			for(unsigned int iR=0; iR<1; iR++)
+			{
+				draw_sepa(nac_1sub[1][iS][iV][iR],nac_1sub[0][iS][iV][iR],ratio_nac_1sub[iS][iV][iR],iS,iV,iR,2,iBin);
+			}
+		}
+	}
+
+
 	vector<TGraphErrors*> gVec;
 
 	// 0: c2_1sub
@@ -244,6 +282,22 @@ void Plot::initialize(unsigned int iBin)
 	sprintf(name,"../OUTPUT/Sys_bin%d.root",iBin);
 	TFile* fIn = new TFile(name,"READ");
 
+	for(unsigned int iF=0; iF<2; iF++)
+	{
+		for(unsigned int iS=0; iS<NS; iS++)
+		{
+			for(unsigned int iV=0; iV<NV; iV++)
+			{
+				for(unsigned int iR=0; iR<NR; iR++)
+				{
+					readHist_FSVR(fIn,v4_1sub[iF][iS][iV][iR],"v4_1sub",iF,iS,iV,iR);
+					readHist_FSVR(fIn,nsc_1sub[iF][iS][iV][iR],"nsc_3sub",iF,iS,iV,iR);
+					readHist_FSVR(fIn,nac_1sub[iF][iS][iV][iR],"nac_3sub",iF,iS,iV,iR);
+				}
+			}
+		}
+	}
+
 	for(unsigned int iS=0; iS<NS; iS++)
 	{
 		for(unsigned int iV=0; iV<NV; iV++)
@@ -412,7 +466,7 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	else
 	{
 		isCent = false;
-		xMin = 0;
+		xMin = 0.5;
 		xMax = 16;
 	}
 	for(int iG=0; iG<NG; iG++) getYrange(gIn[iG],yMin,yMax,isCent);
@@ -428,13 +482,20 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	gStyle->SetOptStat(0);
 	gStyle->SetErrorX(0.0001);
 	cOut->cd();
+	if(iOpt>13) gPad->SetLogx(1);
+	else gPad->SetLogx(0);
 	gPad->SetTicks(1,1);
 	gPad->SetTopMargin(0.075);
 	gPad->SetBottomMargin(0.1);
 	gPad->SetLeftMargin(0.125);
 	gPad->SetRightMargin(0.025);
-	if(iOpt<=13) hAxis->GetXaxis()->SetTitle("Centrality / %");
-	else hAxis->GetXaxis()->SetTitle("p_{T} / GeV");
+	if(iOpt>13)
+	{
+		hAxis->GetXaxis()->SetMoreLogLabels();
+		hAxis->GetXaxis()->SetNoExponent();
+	}
+	if(iOpt<=13) hAxis->GetXaxis()->SetTitle("Centrality [%]");
+	else hAxis->GetXaxis()->SetTitle("p_{T} [GeV]");
 	hAxis->GetXaxis()->SetTitleOffset(1.15);
 	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
 	if(iOpt==0) sprintf(name,"c_{%d}{2}",iV);
@@ -529,6 +590,163 @@ void Plot::draw_graph(vector<TGraphErrors*> vIn, int iV, int iR, int iC, int iOp
 	delete cOut;
 }
 
+void Plot::draw_sepa(TGraphErrors* g0, TGraphErrors* g1, TGraphErrors* gR, int iS, int iV, int iR, int iOpt, unsigned int iBin)
+{
+	styleGraph(g0,0); styleGraph(g1,1); styleGraph(gR,0);
+	for(int iB=0; iB<g1->GetN(); iB++)
+	{
+		double x; double y;
+		g1->GetPoint(iB,x,y);
+		x += 2;
+		g1->SetPoint(iB,x,y);
+	}
+
+	TLatex* tex = new TLatex();
+	tex->SetTextFont(42);
+	tex->SetTextSize(0.045);
+	tex->SetTextAlign(12);
+	tex->SetNDC(1);
+	TLine* lin = new TLine();
+	lin->SetLineColor(1);
+	lin->SetLineStyle(2);
+	lin->SetLineWidth(2);
+	TLegend* leg = new TLegend(0.225,0.025,0.95,0.125);
+	leg->SetTextSize(0.05);
+	leg->SetFillStyle(0);
+	leg->SetBorderSize(0);
+	leg->SetNColumns(2);
+	if(iS==0)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{default}","p");
+	}
+	if(iS==1)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{low track eff.}","p");
+	}
+	if(iS==2)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{high track eff.}","p");
+	}
+	if(iS==3)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{tight track sel.}","p");
+	}
+	if(iS==4)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{83.5% cent.}","p");
+	}
+	if(iS==5)
+	{
+		leg->AddEntry(g0,"#font[42]{recon}","p");
+		leg->AddEntry(g1,"#font[42]{truth}","p");
+	}
+	if(iS==6)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{mix narrow}","p");
+	}
+	if(iS==7)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{85.5% cent.}","p");
+	}
+	if(iS==8)
+	{
+		leg->AddEntry(g0,"#font[42]{default}","p");
+		leg->AddEntry(g1,"#font[42]{mix wide}","p");
+	}
+
+	double xMin =  0;
+	double xMax =  60;
+	double yMin =  1;
+	double yMax = -1;
+	getYrange(g0,yMin,yMax,true);
+	getYrange(g1,yMin,yMax,true);
+	double diff = yMax-yMin;
+	yMax += 0.5*diff;
+	yMin -= 0.5*diff;
+
+	TH1D* hAxis = new TH1D("hAxis","",1000,xMin,xMax);
+	for(int i=0; i<1000; i++) hAxis->SetBinContent(i+1,1E9);
+	styleGraph(hAxis,0);
+
+	TCanvas* cOut = new TCanvas("cOut","",300,500);
+	gStyle->SetOptStat(0);
+	gStyle->SetErrorX(0.0001);
+	cOut->cd();
+	TPad* pad1 = new TPad("pad1","",0,0.3,1,1);
+	pad1->Draw();
+	pad1->cd();
+	pad1->SetTicks(1,1);
+	pad1->SetTopMargin(0.075);
+	pad1->SetBottomMargin(0.01);
+	pad1->SetLeftMargin(0.2);
+	pad1->SetRightMargin(0.025);
+	hAxis->GetXaxis()->SetTitle("Centrality [%]");
+	hAxis->GetXaxis()->SetTitleOffset(5);
+	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
+	if(iOpt==0) sprintf(name,"v_{%d}{4}",iV);
+	if(iOpt==1)
+	{
+		if(iV==0) sprintf(name,"nsc_{2,3}{4}");
+		if(iV==1) sprintf(name,"nsc_{2,4}{4}");
+	}
+	if(iOpt==2)
+	{
+		if(iV==2) sprintf(name,"nac_{2,4}{3}");
+	}
+	hAxis->GetYaxis()->SetTitle(name);
+	hAxis->GetYaxis()->SetTitleOffset(3.3);
+	hAxis->GetYaxis()->SetRangeUser(yMin,yMax);
+	hAxis->DrawCopy();
+	g0->Draw("P");
+	g1->Draw("P");
+	tex->DrawLatex(0.25,0.875,"#font[72]{ATLAS} #font[62]{Internal}");
+	tex->DrawLatex(0.25,0.82,"#font[42]{Xe+Xe #sqrt{s_{NN}}=5.44 TeV}");
+	if(iOpt<=10) sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV   standard}",minPtRef[iR],maxPtRef[iR]);
+	else sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV   3-subevent}",minPtRef[iR],maxPtRef[iR]);
+	tex->DrawLatex(0.25,0.76,name);
+	if(yMax>0 && yMin<0) lin->DrawLine(xMin,0,xMax,0);
+	leg->Draw();
+	cOut->cd();
+	TPad* pad2 = new TPad("pad2","",0,0,1,0.3);
+	pad2->Draw();
+	pad2->cd();
+	pad2->SetTicks(1,1);
+	pad2->SetTopMargin(0.01);
+	pad2->SetBottomMargin(0.2);
+	pad2->SetLeftMargin(0.2);
+	pad2->SetRightMargin(0.025);
+	hAxis->GetXaxis()->SetTitle("Centrality [%]");
+	hAxis->GetXaxis()->SetTitleOffset(2.7);
+	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
+	sprintf(name,"check / default - 1");
+	hAxis->GetYaxis()->SetTitle(name);
+	hAxis->GetYaxis()->SetTitleOffset(3.3);
+	hAxis->GetYaxis()->SetRangeUser(-0.14,0.14);
+	hAxis->DrawCopy();
+	gR->Draw("P");
+	lin->DrawLine(xMin,0,xMax,0);
+
+	if(iOpt==0) sprintf(name,"../PLOT/bin%d/sys%d_v4_1sub_Har%d_PtRef%d.pdf",iBin,iS,iV,iR);
+	if(iOpt==1) sprintf(name,"../PLOT/bin%d/sys%d_nsc_1sub_Har%d_PtRef%d.pdf",iBin,iS,iV,iR);
+	if(iOpt==2) sprintf(name,"../PLOT/bin%d/sys%d_nac_1sub_Har%d_PtRef%d.pdf",iBin,iS,iV,iR);
+	cOut->Print(name);
+	if(iOpt==0) sprintf(name,"sys%d_v4_1sub_Har%d_PtRef%d",iS,iV,iR);
+	if(iOpt==1) sprintf(name,"sys%d_nsc_1sub_Har%d_PtRef%d",iS,iV,iR);
+	if(iOpt==2) sprintf(name,"sys%d_nac_1sub_Har%d_PtRef%d",iS,iV,iR);
+	cOut->SetName(name);
+	cOut->Write();
+
+	delete hAxis;
+	delete cOut;
+}
+
 void Plot::styleGraph(TGraph* hIn, int k)
 {
 	hIn->SetTitle("");
@@ -573,6 +791,12 @@ void Plot::getYrange(TGraph* hIn, double& yMin, double& yMax, bool isCent)
 		if(y<yMin) yMin = y;
 		if(y>yMax) yMax = y;
 	}
+}
+
+void Plot::readHist_FSVR(TFile* fIn, TGraphErrors*& hIn, const char* hName, int iF, int iS, int iV, int iR)
+{
+	sprintf(name,"%s_File%d_Sys%d_Har%d_PtRef%d",hName,iF,iS,iV,iR);
+	hIn = (TGraphErrors*)fIn->Get(name);
 }
 
 void Plot::readHist_SVR(TFile* fIn, TGraphErrors*& hIn, const char* hName, int iS, int iV, int iR)

@@ -3,6 +3,16 @@
 
 #include "Rule.h"
 
+const double np_cent[25] = {
+	0,  1,  2,  3,  4,  5,  6,  7,  8,  9,
+	10, 15, 20, 25, 30, 35, 40, 45, 50, 55,
+	60, 65, 70, 75, 80};
+const double np_np[24] = {
+	247.042, 242.599, 237.930, 232.588, 226.708, 220.641, 214.596, 208.584, 202.609, 196.646,
+	179.691, 153.447, 130.146, 109.637, 91.5528, 75.6057, 61.6532, 49.5029, 39.2177, 30.5018,
+	23.3594, 17.2835, 12.5505, 8.94715
+};
+
 class Phase5
 {
 	private:
@@ -58,11 +68,14 @@ class Phase5
 		TGraphAsymmErrors* sys_ac_3sub[NV][NR];
 		TGraphAsymmErrors* sys_nac_3sub[NV][NR];
 
+		TGraph* gCvt_Cent_Npart;
+
 		void readHist_VR(TFile*, TGraphErrors*&, const char*, const char*, int iV, int iR);
 		void readHist_VR(TFile*, TGraphAsymmErrors*&, const char*, const char*, int iV, int iR);
 		void readHist_VRC(TFile*, TGraphErrors*&, const char*, const char*, int iV, int iR, int iC);
 		void readHist_VRC(TFile*, TGraphAsymmErrors*&, const char*, const char*, int iV, int iR, int iC);
 		void cal_norm(TGraphErrors* gSts, TGraphAsymmErrors* gSys, TGraphErrors* gRef, TGraphErrors* gV4, vector<TGraphErrors*> gVec, int iOpt);
+		void cvt_Npart(TGraph* gCvt, TGraphErrors* gSts, TGraphAsymmErrors* gSys);
 
 	public:
 		Phase5(unsigned int iBin);

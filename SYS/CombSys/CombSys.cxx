@@ -59,6 +59,7 @@ void CombSys::execute()
 		for(unsigned int iV=0; iV<NV; iV++)
 		{
 			// centrality definition
+			/*
 			set_sys(ratio_c2_1sub[4][iV][iR], +2); set_sys(ratio_c2_1sub[7][iV][iR], -2);
 			set_sys(ratio_c4_1sub[4][iV][iR], +4); set_sys(ratio_c4_1sub[7][iV][iR], -4);
 			set_sys(ratio_c6_1sub[4][iV][iR], +6); set_sys(ratio_c6_1sub[7][iV][iR], -6);
@@ -76,6 +77,7 @@ void CombSys::execute()
 				set_sys(ratio_vd2_1sub[4][iV][iR][iC], +1, +1); set_sys(ratio_vd2_1sub[7][iV][iR][iC], -1, -1);
 				set_sys(ratio_vd4_1sub[4][iV][iR][iC], +1, +1); set_sys(ratio_vd4_1sub[7][iV][iR][iC], -1, -1);
 			}
+			*/
 
 			// event mixing
 			/*
@@ -197,10 +199,10 @@ void CombSys::initialize(unsigned int iBin)
 			if(iF==0 && iS==1) sprintf(name,"../../trkEffLw/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==2) sprintf(name,"../../trkEffUp/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==3) sprintf(name,"../../trkSel/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
-			if(iF==0 && iS==4) sprintf(name,"../../pileup/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
+			if(iF==0 && iS==4) sprintf(name,"../../centUp/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==5) sprintf(name,"../../mcTruth/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==6) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin); // no flattening systematics
-			if(iF==0 && iS==7) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
+			if(iF==0 && iS==7) sprintf(name,"../../centLw/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 			if(iF==0 && iS==8) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
 
 			if(iF==1 && iS==0) sprintf(name,"../../default/OUTPUT/Phase3/Phase3_bin%d.root",iBin);
@@ -587,6 +589,8 @@ void CombSys::smooth()
 	smooth_ratio(ratio_c4_1sub[3][3][0],0,0.1);
 	smooth_ratio(ratio_c4_1sub[6][3][0],0,0.2);
 	smooth_ratio(ratio_c4_1sub[3][3][0],5,0.2);
+	reduce_ratio(ratio_c4_1sub[3][3][0],5,0.5);
+	reduce_ratio(ratio_c4_1sub[3][3][0],6,0.5);
 
 	// sys_c4_1sub_Har4_PtRef0
 	smooth_ratio(ratio_c4_1sub[3][4][0],0,0.2);
@@ -600,6 +604,9 @@ void CombSys::smooth()
 	smooth_ratio(ratio_c4_1sub[6][4][0],6,0.2);
 	reduce_ratio(ratio_c4_1sub[5][4][0],6,0.5);
 	reduce_ratio(ratio_c4_1sub[6][4][0],6,0.5);
+	reduce_ratio(ratio_c4_1sub[3][4][0],5,0.5);
+	reduce_ratio(ratio_c4_1sub[4][4][0],5,0.25);
+	reduce_ratio(ratio_c4_1sub[7][4][0],5,0.25);
 
 	// sys_c6_1sub_Har2_PtRef0
 	smooth_ratio(ratio_c6_1sub[4][2][0],0,0.2);
@@ -654,12 +661,21 @@ void CombSys::smooth()
 	
 	// sys_cr42_1sub_Har2_PtRef0
 	reduce_ratio(ratio_cr42_1sub[3][2][0],6,0.1);
+	
+	// sys_cr64_1sub_Har2_PtRef0
+	reduce_ratio(ratio_cr64_1sub[1][2][0],0,0.2);
+	reduce_ratio(ratio_cr64_1sub[2][2][0],0,0.2);
+	reduce_ratio(ratio_cr64_1sub[3][2][0],1,0.3);
+	reduce_ratio(ratio_cr64_1sub[3][2][0],6,0.1);
 
 	// sys_sc_1sub_Har0_PtRef0
 	smooth_ratio(ratio_sc_1sub[3][0][0],1,0.2);
 	smooth_ratio(ratio_sc_1sub[3][0][0],6,0.2);
 	reduce_ratio(ratio_sc_1sub[5][0][0],6,0.2);
 	smooth_ratio(ratio_sc_1sub[6][0][0],6,0.2);
+	reduce_ratio(ratio_sc_1sub[3][0][0],0,0.3);
+	reduce_ratio(ratio_sc_1sub[3][0][0],1,0.3);
+	reduce_ratio(ratio_sc_1sub[3][0][0],2,0.3);
 
 	// sys_sc_1sub_Har1_PtRef0
 	reduce_ratio(ratio_sc_1sub[5][1][0],6,0.5);
@@ -671,6 +687,11 @@ void CombSys::smooth()
 	smooth_ratio(ratio_nsc_1sub[6][0][0],6,0.2);
 	reduce_ratio(ratio_nsc_1sub[5][0][0],6,0.3);
 	reduce_ratio(ratio_nsc_1sub[6][0][0],6,0.3);
+	reduce_ratio(ratio_nsc_1sub[3][0][0],0,0.25);
+	reduce_ratio(ratio_nsc_1sub[3][0][0],1,0.25);
+	reduce_ratio(ratio_nsc_1sub[3][0][0],2,0.25);
+	reduce_ratio(ratio_nsc_1sub[3][0][0],4,0.5);
+	reduce_ratio(ratio_nsc_1sub[3][0][0],5,0.3);
 
 	// sys_nsc_1sub_Har1_PtRef0
 	for(int i=0; i<7; i++) reduce_ratio(ratio_nsc_1sub[6][1][0],i,0.01);

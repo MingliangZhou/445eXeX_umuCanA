@@ -19,6 +19,10 @@ const int lC[8] = {kBlue+2, kRed+2, kGreen+2, kYellow+2, kMagenta+2, kCyan+2, kO
 class Plot
 {
 	private:
+		TGraphErrors* v4_1sub[2][NS][NV][NR];
+		TGraphErrors* nsc_1sub[2][NS][NV][NR];
+		TGraphErrors* nac_1sub[2][NS][NV][NR];
+
 		TGraphErrors* ratio_c2_1sub[NS][NV][NR];
 		TGraphErrors* ratio_c4_1sub[NS][NV][NR];
 		TGraphErrors* ratio_c6_1sub[NS][NV][NR];
@@ -94,11 +98,13 @@ class Plot
 		TGraphErrors* sysLw_vd2_1sub[NV][NR][nCent];
 		TGraphErrors* sysLw_vd4_1sub[NV][NR][nCent];
 
+		void readHist_FSVR(TFile*, TGraphErrors*&, const char*, int iF, int iS, int iV, int iR);
 		void readHist_SVR(TFile*, TGraphErrors*&, const char*, int iS, int iV, int iR);
 		void readHist_SVRC(TFile*, TGraphErrors*&, const char*, int iS, int iV, int iR, int iC);
 		void readHist_VR(TFile*, TGraphErrors*&, const char*, int iV, int iR);
 		void readHist_VRC(TFile*, TGraphErrors*&, const char*, int iV, int iR, int iC);
 		void draw_graph(vector<TGraphErrors*>, int iV=-1, int iR=-1, int iC=-1, int iOpt=-1, unsigned int iBin=2);
+		void draw_sepa(TGraphErrors* g0, TGraphErrors* g1, TGraphErrors* gR, int iS, int iV, int iR, int iOpt, unsigned int iBin=2);
 		void styleGraph(TGraph*, int);
 		void styleGraph(TH1D*, int);
 		void getYrange(TGraph*, double&, double&, bool isCent);

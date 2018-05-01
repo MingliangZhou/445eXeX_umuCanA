@@ -35,14 +35,15 @@ const double gapEta = 0.;
 const double cutZvtx = 100;
 const double cutQual = 1;
 
-const unsigned int nBin = 400;
+const unsigned int nBin = 80;
 const double minBin = 0;
 const double maxBin = 80;
-const unsigned int nRebin[2] = {24,11};
-const double xRebin[2][25] = 
+const unsigned int nRebin[2] = {7,7};
+const double xRebin[2][8] =
 {
-	{ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,12,14,16,18,20,25,30,35,40,45,50,60,70,80},
-	{ 0, 2, 4, 6, 8,10,15,20,30,40,60,80,81,82,83,84,85,86,87,88,89,90,91,92,93}
+	{0,5,10,20,30,40,60,80},
+	{0,5,10,20,30,40,60,80}
+	//{0,2,4,6,8,10,15,20,30,40,60,80}
 };
 
 const unsigned int nCent = 6; // for pT measurements
@@ -50,10 +51,10 @@ const double xCent[nCent+1] = {0,5,10,20,40,60,80};
 
 const unsigned int NV = 5; // harmonics from v0 to v4
 const unsigned int NVm = 13; // higher harmonics for Q-cumulant with weights, from v0 to v12
-const unsigned int NP = 12; // number of pT cuts for differential particles
-const double minPt[NP] = {0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 5.0, 7.0, 10.0};
-const double maxPt[NP] = {0.6, 0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 5.0, 7.0,10.0, 20.0};
-const double xPt[NP+1] = {0.5, 0.6, 0.8, 1.0, 1.2, 1.5, 2.0, 3.0, 4.0, 5.0, 7.0, 10.0, 20.0};
+const unsigned int NP = 6; // number of pT cuts for differential particles
+const double minPt[NP] = {0.5, 0.7, 1.0, 2.0, 5.0, 10.0};
+const double maxPt[NP] = {0.7, 1.0, 2.0, 5.0, 10.0, 20.0};
+const double xPt[NP+1] = {0.5, 0.7, 1.0, 2.0, 5.0, 10.0, 20.0};
 const unsigned int NR = 4; // number of pT cuts for reference particles
 const double minPtRef[NR] = {0.5, 1.0, 1.5, 2.0}; // minimum pT for reference particles
 const double maxPtRef[NR] = {5.0, 5.0, 5.0, 5.0}; // maximum pT for reference particles
@@ -64,7 +65,7 @@ const unsigned int nMixZvtx = 10; // number of zvtx bins for mixed events
 const unsigned int nMixCent = 10; // number of centralities for mixed events
 const unsigned int nDepth = 4; // depth of mix event pool
 
-const unsigned int nSample = 20; // number of samples for statistical errors
+const unsigned int nSample = 10; // number of samples for statistical errors
 const unsigned int nFile = 4; // number of files per bundle to calculate statistical errors
 
 #endif

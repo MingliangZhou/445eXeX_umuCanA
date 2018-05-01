@@ -146,7 +146,7 @@ void Phase4::initialize(unsigned int iBin)
 			readHist_VR_Xe(fSysXe,sysUp_v4_1sub[iV][iR],"sysUp_v4_1sub","sysUp_v4_1sub",iV,iR);
 			readHist_VR_Xe(fSysXe,sysUp_v6_1sub[iV][iR],"sysUp_v6_1sub","sysUp_v6_1sub",iV,iR);
 			readHist_VR_Xe(fSysXe,sysUp_cr42_1sub[iV][iR],"sysUp_cr42_1sub","sysUp_cr42_1sub",iV,iR);
-			readHist_VR_Xe(fSysXe,sysUp_cr64_1sub[iV][iR],"sysUp_cr64_1sub","sysUp_cr64_1sub",iV,iR);
+			readHist_VR(fSys,sysUp_cr64_1sub[iV][iR],"sysUp_isGauss_1sub","sysUp_cr64_1sub",iV,iR); // use isGauss
 			readHist_VR(fSys,sysUp_sc_1sub[iV][iR],"sysUp_sc_1sub","sysUp_sc_1sub",iV,iR);
 			readHist_VR(fSys,sysUp_nsc_1sub[iV][iR],"sysUp_nsc_1sub","sysUp_nsc_1sub",iV,iR);
 			readHist_VR(fSys,sysUp_ac_1sub[iV][iR],"sysUp_ac_1sub","sysUp_ac_1sub",iV,iR);
@@ -174,7 +174,7 @@ void Phase4::initialize(unsigned int iBin)
 			readHist_VR_Xe(fSysXe,sysLw_v4_1sub[iV][iR],"sysLw_v4_1sub","sysLw_v4_1sub",iV,iR);
 			readHist_VR_Xe(fSysXe,sysLw_v6_1sub[iV][iR],"sysLw_v6_1sub","sysLw_v6_1sub",iV,iR);
 			readHist_VR_Xe(fSysXe,sysLw_cr42_1sub[iV][iR],"sysLw_cr42_1sub","sysLw_cr42_1sub",iV,iR);
-			readHist_VR_Xe(fSysXe,sysLw_cr64_1sub[iV][iR],"sysLw_cr64_1sub","sysLw_cr64_1sub",iV,iR);
+			readHist_VR(fSys,sysLw_cr64_1sub[iV][iR],"sysLw_isGauss_1sub","sysLw_cr64_1sub",iV,iR); // use isGauss
 			readHist_VR(fSys,sysLw_sc_1sub[iV][iR],"sysLw_sc_1sub","sysLw_sc_1sub",iV,iR);
 			readHist_VR(fSys,sysLw_nsc_1sub[iV][iR],"sysLw_nsc_1sub","sysLw_nsc_1sub",iV,iR);
 			readHist_VR(fSys,sysLw_ac_1sub[iV][iR],"sysLw_ac_1sub","sysLw_ac_1sub",iV,iR);

@@ -5,10 +5,10 @@ const double plot_yMax[] = {0.15,  14e-6,  2, 1.0, 1.04, 0.34};
 
 const double graph_leg[6][4] = {
 {0.8,   0.68,   0.95,  0.9 },
-{0.125, 0.125,  0.95,  0.25},
-{0.125, 0.125,  0.95,  0.25},
-{0.125, 0.125,  0.95,  0.25},
-{0.125, 0.125,  0.95,  0.25},
+{0.125, 0.125,  0.95,  0.2},
+{0.125, 0.125,  0.95,  0.2},
+{0.125, 0.125,  0.95,  0.2},
+{0.125, 0.125,  0.95,  0.2},
 {0.8,   0.72,   0.95,  0.9}
 };
 
@@ -27,14 +27,71 @@ void Plot::execute()
 {
 	cout<<"execute..."<<endl;
 
+	// fix statistical errors in central
+	for(int i=0; i<3; i++)
+	{
+		double x = 0; double y = 0; double yErr = 0;
+
+		sts_c4_1sub[0][0][2][0]->GetPoint(i,x,y);
+		yErr = sts_c4_1sub[0][0][2][0]->GetErrorY(i);
+		yErr = 1./4*pow(fabs(y),-3./4)*yErr;
+		sts_v4_1sub[0][0][2][0]->SetPointError(i,0,yErr);
+
+		sts_c6_1sub[0][0][2][0]->GetPoint(i,x,y);
+		yErr = sts_c6_1sub[0][0][2][0]->GetErrorY(i);
+		yErr = 1./4/6*pow(fabs(y),-5./6)*yErr;
+		sts_v6_1sub[0][0][2][0]->SetPointError(i,0,yErr);
+
+		sts_c4_1sub[0][1][3][0]->GetPoint(i,x,y);
+		yErr = sts_c4_1sub[0][1][3][0]->GetErrorY(i);
+		yErr = 1./4*pow(fabs(y),-3./4)*yErr;
+		sts_v4_1sub[0][1][3][0]->SetPointError(i,0,yErr);
+	}
+
 	// Remove Points for paper
 	///*
-	for(int i=sts_nsc_1sub[0][0][1][0]->GetN()-1; i>=22; i--)
+	for(int iV=3; iV<5; iV++)
+	{
+		for(int i=sts_c4_1sub[0][1][iV][0]->GetN()-1; i>=10; i--)
+		{
+			// Phase5 ONLY
+			//sts_c4_1sub[0][1][iV][0]->RemovePoint(i);
+			//sys_c4_1sub[0][1][iV][0]->RemovePoint(i);
+		}
+	}
+	for(int i=0; i<2; i++)
+	{
+		//sts_c4_1sub[0][1][3][0]->RemovePoint(0);
+		//sys_c4_1sub[0][1][3][0]->RemovePoint(0);
+		//sts_v4_1sub[0][1][3][0]->RemovePoint(0);
+		//sys_v4_1sub[0][1][3][0]->RemovePoint(0);
+	}
+	for(int i=sts_c4_1sub[1][0][3][0]->GetN()-1; i>=31; i--)
+	{
+		sts_c4_1sub[1][0][3][0]->RemovePoint(i);
+		sys_c4_1sub[1][0][3][0]->RemovePoint(i);
+	}
+	for(int i=sts_c4_1sub[1][0][4][0]->GetN()-1; i>=32; i--)
+	{
+		sts_c4_1sub[1][0][4][0]->RemovePoint(i);
+		sys_c4_1sub[1][0][4][0]->RemovePoint(i);
+	}
+	for(int i=sts_nsc_1sub[0][0][0][0]->GetN()-1; i>=23; i--)
+	{
+		sts_nsc_1sub[0][0][0][0]->RemovePoint(i);
+		sys_nsc_1sub[0][0][0][0]->RemovePoint(i);
+	}
+	for(int i=sts_nsc_1sub[0][0][1][0]->GetN()-1; i>=23; i--)
 	{
 		sts_nsc_1sub[0][0][1][0]->RemovePoint(i);
 		sys_nsc_1sub[0][0][1][0]->RemovePoint(i);
 	}
-	for(int i=sts_cr64_1sub[0][0][2][0]->GetN()-1; i>=22; i--)
+	for(int i=0; i<=2; i++)
+	{
+		sts_cr42_1sub[0][0][2][0]->RemovePoint(0);
+		sys_cr42_1sub[0][0][2][0]->RemovePoint(0);
+	}
+	for(int i=sts_cr64_1sub[0][0][2][0]->GetN()-1; i>=21; i--)
 	{
 		sts_cr64_1sub[0][0][2][0]->RemovePoint(i);
 		sys_cr64_1sub[0][0][2][0]->RemovePoint(i);
@@ -47,16 +104,21 @@ void Plot::execute()
 	
 	for(int i=sts_cr64_1sub[1][0][2][0]->GetN()-1; i>=23; i--)
 	{
-		sts_cr64_1sub[1][0][2][0]->RemovePoint(i);
-		sys_cr64_1sub[1][0][2][0]->RemovePoint(i);
+		//sts_cr64_1sub[1][0][2][0]->RemovePoint(i);
+		//sys_cr64_1sub[1][0][2][0]->RemovePoint(i);
 	}
 	for(int i=0; i<5; i++)
 	{
-		sts_cr64_1sub[1][0][2][0]->RemovePoint(0);
-		sys_cr64_1sub[1][0][2][0]->RemovePoint(0);
+		//sts_cr64_1sub[1][0][2][0]->RemovePoint(0);
+		//sys_cr64_1sub[1][0][2][0]->RemovePoint(0);
 	}
 
-	for(int i=sts_vd4_1sub[0][0][3][0][0]->GetN()-1; i>=7; i--)
+	for(int i=sts_vd4_1sub[0][0][2][0][0]->GetN()-1; i>=10; i--)
+	{
+		sts_vd4_1sub[0][0][2][0][0]->RemovePoint(i);
+		sys_vd4_1sub[0][0][2][0][0]->RemovePoint(i);
+	}
+	for(int i=sts_vd4_1sub[0][0][3][0][0]->GetN()-1; i>=8; i--)
 	{
 		sts_vd4_1sub[0][0][3][0][0]->RemovePoint(i);
 		sys_vd4_1sub[0][0][3][0][0]->RemovePoint(i);
@@ -66,7 +128,7 @@ void Plot::execute()
 		sts_vd4_1sub[0][0][3][0][1]->RemovePoint(i);
 		sys_vd4_1sub[0][0][3][0][1]->RemovePoint(i);
 	}
-	for(int i=sts_vd4_1sub[0][0][3][0][2]->GetN()-1; i>=8; i--)
+	for(int i=sts_vd4_1sub[0][0][3][0][2]->GetN()-1; i>=9; i--)
 	{
 		sts_vd4_1sub[0][0][3][0][2]->RemovePoint(i);
 		sys_vd4_1sub[0][0][3][0][2]->RemovePoint(i);
@@ -382,8 +444,20 @@ void Plot::initialize()
 {
 	cout<<"initialize..."<<endl;
 
+	double x[24] = {0};
+	double y[24] = {0};
+	for(int i=0; i<24; i++)
+	{
+		x[i] = (np_cent[i]+np_cent[i+1])/2;
+		y[i] = np_np[i];
+	}
+	gCvt_Cent_Npart = new TGraph(24,x,y);
+	gCvt_Cent_Npart->SetName("gCvt_Cent_Npart");
+
+	TFile* fConfPb = new TFile("../INPUT/hist_PbPb502_bin1.root","READ");
+	TFile* fCmsPb = new TFile("../INPUT/cms.root","READ");
+
 	TFile* fIn[NF][2];
-	
 	for(unsigned int iF=0; iF<2; iF++)
 	{
 		for(unsigned int iB=0; iB<2; iB++)
@@ -395,8 +469,33 @@ void Plot::initialize()
 			{
 				for(unsigned int iR=0; iR<NR; iR++)
 				{
+					// borrow from other experiments
+					if(iF==1)
+					{
+						sprintf(name,"sys_c4_1sub_Har%d_Pt0",iV); sys_c4_1sub[iF][iB][iV][iR] = (TGraphAsymmErrors*)fConfPb->Get(name);
+						sprintf(name,"sys_c4_1sub_Har%d_PtRef%d",iV,iR); sys_c4_1sub[iF][iB][iV][iR]->SetName(name);
+						sprintf(name,"sts_c4_1sub_Har%d_Pt0",iV); sts_c4_1sub[iF][iB][iV][iR] = (TGraphErrors*)fConfPb->Get(name);
+						sprintf(name,"sts_c4_1sub_Har%d_PtRef%d",iV,iR); sts_c4_1sub[iF][iB][iV][iR]->SetName(name);
+						//cvt_Npart(gCvt_Cent_Npart,sts_c4_1sub[iF][iB][iV][iR],sys_c4_1sub[iF][iB][iV][iR]); // Phase5
+
+						sprintf(name,"CMS_ratio_v6_v4"); sys_cr64_1sub[iF][iB][iV][iR] = (TGraphAsymmErrors*)fCmsPb->Get(name);
+						sprintf(name,"sys_cr64_1sub_Har%d_PtRef%d",iV,iR); sys_cr64_1sub[iF][iB][iV][iR]->SetName(name);
+						int NB = sys_cr64_1sub[iF][iB][iV][iR]->GetN();
+						double x[NB]; double xErr[NB];
+						double y[NB]; double yErr[NB];
+						for(int i=0; i<NB; i++)
+						{
+							sys_cr64_1sub[iF][iB][iV][iR]->GetPoint(i,x[i],y[i]);
+							xErr[i] = 0;
+							yErr[i] = 0;
+						}
+						sts_cr64_1sub[iF][iB][iV][iR] = new TGraphErrors(NB,x,y,xErr,yErr);
+						sprintf(name,"sts_cr64_1sub_Har%d_PtRef%d",iV,iR); sts_cr64_1sub[iF][iB][iV][iR]->SetName(name);
+						//cvt_Npart(gCvt_Cent_Npart,sts_cr64_1sub[iF][iB][iV][iR],sys_cr64_1sub[iF][iB][iV][iR]); // Phase5
+					}
+
 					readHist_VR(fIn[iF][iB],sys_c2_1sub[iF][iB][iV][iR],"sys_c2_1sub",iV,iR);
-					readHist_VR(fIn[iF][iB],sys_c4_1sub[iF][iB][iV][iR],"sys_c4_1sub",iV,iR);
+					if(iF==0) readHist_VR(fIn[iF][iB],sys_c4_1sub[iF][iB][iV][iR],"sys_c4_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_c6_1sub[iF][iB][iV][iR],"sys_c6_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_nc4_1sub[iF][iB][iV][iR],"sys_nc4_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_nc6_1sub[iF][iB][iV][iR],"sys_nc6_1sub",iV,iR);
@@ -404,7 +503,7 @@ void Plot::initialize()
 					readHist_VR(fIn[iF][iB],sys_v4_1sub[iF][iB][iV][iR],"sys_v4_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_v6_1sub[iF][iB][iV][iR],"sys_v6_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_cr42_1sub[iF][iB][iV][iR],"sys_cr42_1sub",iV,iR);
-					readHist_VR(fIn[iF][iB],sys_cr64_1sub[iF][iB][iV][iR],"sys_cr64_1sub",iV,iR);
+					if(iF==0) readHist_VR(fIn[iF][iB],sys_cr64_1sub[iF][iB][iV][iR],"sys_cr64_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_sc_1sub[iF][iB][iV][iR],"sys_sc_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_nsc_1sub[iF][iB][iV][iR],"sys_nsc_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sys_ac_1sub[iF][iB][iV][iR],"sys_ac_1sub",iV,iR);
@@ -424,7 +523,7 @@ void Plot::initialize()
 					}
 
 					readHist_VR(fIn[iF][iB],sts_c2_1sub[iF][iB][iV][iR],"sts_c2_1sub",iV,iR);
-					readHist_VR(fIn[iF][iB],sts_c4_1sub[iF][iB][iV][iR],"sts_c4_1sub",iV,iR);
+					if(iF==0) readHist_VR(fIn[iF][iB],sts_c4_1sub[iF][iB][iV][iR],"sts_c4_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_c6_1sub[iF][iB][iV][iR],"sts_c6_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_nc4_1sub[iF][iB][iV][iR],"sts_nc4_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_nc6_1sub[iF][iB][iV][iR],"sts_nc6_1sub",iV,iR);
@@ -432,7 +531,7 @@ void Plot::initialize()
 					readHist_VR(fIn[iF][iB],sts_v4_1sub[iF][iB][iV][iR],"sts_v4_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_v6_1sub[iF][iB][iV][iR],"sts_v6_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_cr42_1sub[iF][iB][iV][iR],"sts_cr42_1sub",iV,iR);
-					readHist_VR(fIn[iF][iB],sts_cr64_1sub[iF][iB][iV][iR],"sts_cr64_1sub",iV,iR);
+					if(iF==0) readHist_VR(fIn[iF][iB],sts_cr64_1sub[iF][iB][iV][iR],"sts_cr64_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_sc_1sub[iF][iB][iV][iR],"sts_sc_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_nsc_1sub[iF][iB][iV][iR],"sts_nsc_1sub",iV,iR);
 					readHist_VR(fIn[iF][iB],sts_ac_1sub[iF][iB][iV][iR],"sts_ac_1sub",iV,iR);
@@ -472,8 +571,8 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 		styleGraph(gSts[iG],iG);
 		gSys[iG] = (TGraphAsymmErrors*)vSys.at(iG)->Clone("gSys");
 		styleGraph(gSys[iG],iG);
-		gSys[iG]->SetFillColor(mC[iG]);
-		gSys[iG]->SetFillStyle(3001);
+		gSys[iG]->SetFillColor(fC[iG]);
+		//gSys[iG]->SetFillStyle(3001);
 		for(int i=0; i<gSys[iG]->GetN(); i++)
 		{
 			if(iOpt!=5)
@@ -483,8 +582,11 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 			}
 			if(iOpt==5)
 			{
-				gSys[iG]->SetPointEXhigh(i,0.2);
-				gSys[iG]->SetPointEXlow(i,0.2);
+				double yErr = gSts[iG]->GetErrorY(i);
+				double xErr = (xPt[i+1]-xPt[i])/2.;
+				gSts[iG]->SetPointError(i,xErr,yErr);
+				gSys[iG]->SetPointEXhigh(i,xErr/3);
+				gSys[iG]->SetPointEXlow(i,xErr/3);
 			}
 		}
 	}
@@ -538,30 +640,30 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	if(iOpt==0)
 	{
 		sprintf(name,"v_{%d}{4}",2);
-		leg->AddEntry(gSts[0],name,"p");
+		leg->AddEntry(gSys[0],name,"lpfe");
 		sprintf(name,"v_{%d}{6}",2);
-		leg->AddEntry(gSts[1],name,"p");
+		leg->AddEntry(gSys[1],name,"lpfe");
 		sprintf(name,"v_{%d}{4}",3);
-		leg->AddEntry(gSts[2],name,"p");
+		leg->AddEntry(gSys[2],name,"lpfe");
 	}
 	if(iOpt==1)
 	{
-		leg->AddEntry(gSts[0],"sc_{2,3}{4}","p");
-		leg->AddEntry(gSts[1],"sc_{2,4}{4}","p");
-		leg->AddEntry(gSts[2],"ac_{2,4}{3}/50","p");
+		leg->AddEntry(gSys[0],"sc_{2,3}{4}","lpfe");
+		leg->AddEntry(gSys[1],"sc_{2,4}{4}","lpfe");
+		leg->AddEntry(gSys[2],"ac_{2,4}{3}/50","lpfe");
 	}
 	if(iOpt==2)
 	{
-		leg->AddEntry(gSts[0],"nsc_{2,3}{4}","p");
-		leg->AddEntry(gSts[1],"nsc_{2,4}{4}","p");
-		leg->AddEntry(gSts[2],"nac_{2,4}{3}","p");
+		leg->AddEntry(gSys[0],"nsc_{2,3}{4}","lpfe");
+		leg->AddEntry(gSys[1],"nsc_{2,4}{4}","lpfe");
+		leg->AddEntry(gSys[2],"nac_{2,4}{3}","lpfe");
 	}
 	if(iOpt==5)
 	{
 		sprintf(name,"n=%d",2);
-		leg->AddEntry(gSts[0],name,"p");
+		leg->AddEntry(gSys[0],name,"lpfe");
 		sprintf(name,"n=%d",3);
-		leg->AddEntry(gSts[1],name,"p");
+		leg->AddEntry(gSys[1],name,"lpfe");
 	}
 
 	double xMin =  0;
@@ -570,8 +672,8 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	double yMax = -1;
 	if(iOpt==5)
 	{
-		xMin = 0;
-		xMax = 16;
+		xMin = 0.5;
+		xMax = 20;
 	}
 	for(int iG=0; iG<NG; iG++) getYrange(gSts[iG],yMin,yMax,iOpt);
 	double diff = yMax-yMin;
@@ -594,19 +696,25 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	gStyle->SetOptStat(0);
 	gStyle->SetErrorX(0.0001);
 	cOut->cd();
+	if(iOpt==5) gPad->SetLogx(1);
 	gPad->SetTicks(1,1);
 	gPad->SetTopMargin(0.075);
 	gPad->SetBottomMargin(0.1);
 	gPad->SetLeftMargin(0.125);
 	gPad->SetRightMargin(0.025);
-	if(iOpt!=5) hAxis->GetXaxis()->SetTitle("Centrality / %");
+	if(iOpt==5)
+	{
+		hAxis->GetXaxis()->SetMoreLogLabels();
+		hAxis->GetXaxis()->SetNoExponent();
+	}
+	if(iOpt!=5) hAxis->GetXaxis()->SetTitle("Centrality [%]");
 	if(iOpt==5) hAxis->GetXaxis()->SetTitle("p_{T} [GeV]");
 	hAxis->GetXaxis()->SetTitleOffset(1.15);
 	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
 	if(iOpt==0) sprintf(name,"v_{n}{2k}");
-	if(iOpt==1) sprintf(name,"corr(v_{n},v_{m})");
-	if(iOpt==2) sprintf(name,"corr(v_{n},v_{m})");
-	if(iOpt==3) sprintf(name,"v_{%d}{4} / v_{%d}{2}",iV,iV);
+	if(iOpt==1) sprintf(name,"Correlator");
+	if(iOpt==2) sprintf(name,"Correlator");
+	if(iOpt==3) sprintf(name,"v_{%d}{4} / v_{%d}{2PC}",iV,iV);
 	if(iOpt==4) sprintf(name,"v_{%d}{6} / v_{%d}{4}",iV,iV);
 	if(iOpt==5) sprintf(name,"v_{n}{4}");
 	hAxis->GetYaxis()->SetTitle(name);
@@ -614,15 +722,15 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	hAxis->GetYaxis()->SetRangeUser(yMin,yMax);
 	//hAxis->GetYaxis()->SetRangeUser(plot_yMin[iOpt],plot_yMax[iOpt]);
 	//if(iV==3) hAxis->GetYaxis()->SetRangeUser(plot_yMin[iOpt]/2,plot_yMax[iOpt]/2);
-	if(iOpt==4) hAxis->GetYaxis()->SetRangeUser(0.95,1.05);
+	if(iOpt==4) hAxis->GetYaxis()->SetRangeUser(0.95,1.03);
 	if(iOpt==5) hAxis->GetYaxis()->SetRangeUser(0,0.22);
 	hAxis->Draw();
 	for(int iG=0; iG<NG; iG++) gSys[iG]->Draw("2");
 	for(int iG=0; iG<NG; iG++) gSts[iG]->Draw("P");
 	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[42]{Internal}");
 	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe #sqrt{#it{s}_{NN}}=5.44 TeV, 3 #mub^{-1}}");
-	if(iOpt!=5) sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
-	if(iOpt==5) sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV   (%d-%d)%%}",minPtRef[iR],maxPtRef[iR],int(xCent[iC]),int(xCent[iC+1]));
+	if(iOpt!=5) sprintf(name,"#font[42]{%.1f<p_{T}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
+	if(iOpt==5) sprintf(name,"#font[42]{%.1f<p_{T}<%.1f GeV   (%d-%d)%%}",minPtRef[iR],maxPtRef[iR],int(xCent[iC]),int(xCent[iC+1]));
 	tex->DrawLatex(0.175,0.76,name);
 	if(yMax>0 && yMin<0) lin->DrawLine(xMin,0,xMax,0);
 	if(iOpt==4) lin->DrawLine(xMin,1,xMax,1);
@@ -659,8 +767,8 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 		styleGraph(gSts[iG],iG);
 		gSys[iG] = (TGraphAsymmErrors*)vSys.at(iG)->Clone("gSys");
 		styleGraph(gSys[iG],iG);
-		gSys[iG]->SetFillColor(mC[iG]);
-		gSys[iG]->SetFillStyle(3001);
+		gSys[iG]->SetFillColor(fC[iG]);
+		//gSys[iG]->SetFillStyle(3001);
 		for(int i=0; i<gSys[iG]->GetN(); i++)
 		{
 		///*
@@ -683,13 +791,13 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	lin->SetLineColor(1);
 	lin->SetLineStyle(2);
 	lin->SetLineWidth(2);
-	TLegend* leg = new TLegend(0.125,0.125,0.95,0.25);
+	TLegend* leg = new TLegend(0.75,   0.72,   0.95,  0.9);
 	leg->SetTextSize(0.05);
 	leg->SetFillStyle(0);
 	leg->SetBorderSize(0);
-	leg->SetNColumns(2);
-	leg->AddEntry(gSts[0],"Xe+Xe 5.44 TeV","p");
-	leg->AddEntry(gSts[1],"Pb+Pb 5.02 TeV","p");
+	leg->SetNColumns(1);
+	leg->AddEntry(gSys[0],"#font[42]{Xe+Xe}","lpfe");
+	leg->AddEntry(gSys[1],"#font[42]{Pb+Pb}","lpfe");
 
 	double xMin =  0;
 	double xMax = 80; // Phase4
@@ -698,8 +806,8 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	double yMax = -1;
 	for(int iG=0; iG<NG; iG++) getYrange(gSts[iG],yMin,yMax,0);
 	double diff = yMax-yMin;
-	yMax += 0.5*diff;
-	yMin -= 0.5*diff;
+	yMax += 0.7*diff;
+	yMin -= 0.3*diff;
 
 	TH1D* hAxis = new TH1D("hAxis","",1000,xMin,xMax);
 	for(int i=0; i<1000; i++) hAxis->SetBinContent(i+1,1E9);
@@ -714,9 +822,9 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	gPad->SetBottomMargin(0.1);
 	gPad->SetLeftMargin(0.125);
 	gPad->SetRightMargin(0.025);
-	hAxis->GetXaxis()->SetTitle("Centrality / %"); // Phase4
-	//hAxis->GetXaxis()->SetTitle("N_{part}"); // Phase5
-	hAxis->GetXaxis()->SetTitleOffset(1.15);
+	hAxis->GetXaxis()->SetTitle("Centrality [%]"); // Phase4
+	//hAxis->GetXaxis()->SetTitle("#LTN_{part}#GT"); // Phase5
+	hAxis->GetXaxis()->SetTitleOffset(1.12);
 	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
 	if(iOpt==0) sprintf(name,"c_{%d}{2}",iV);
 	if(iOpt==1) sprintf(name,"c_{%d}{4}",iV);
@@ -736,20 +844,22 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 		if(iV==1) sprintf(name,"nsc_{2,4}{4}");
 	}
 	if(iOpt==9) sprintf(name,"nac_{2,4}{3}");
-	if(iOpt==10) sprintf(name,"v_{%d}{4} / v_{%d}{2}",iV,iV);
+	if(iOpt==10) sprintf(name,"v_{%d}{4} / v_{%d}{2PC}",iV,iV);
 	if(iOpt==11) sprintf(name,"v_{%d}{6} / v_{%d}{4}",iV,iV);
 	hAxis->GetYaxis()->SetTitle(name);
 	hAxis->GetYaxis()->SetTitleOffset(1.6);
 	hAxis->GetYaxis()->SetRangeUser(yMin,yMax);
-	if(iOpt==10) hAxis->GetYaxis()->SetRangeUser(0.4,1.1);
-	if(iOpt==11) hAxis->GetYaxis()->SetRangeUser(0.95,1.05);
+	if(iOpt==10) hAxis->GetYaxis()->SetRangeUser(0.4,1.2);
+	if(iOpt==11) hAxis->GetYaxis()->SetRangeUser(0.95,1.03);
 	hAxis->Draw();
 	for(int iG=0; iG<NG; iG++) gSys[iG]->Draw("2");
 	for(int iG=0; iG<NG; iG++) gSts[iG]->Draw("P");
 	tex->DrawLatex(0.175,0.875,"#font[72]{ATLAS} #font[42]{Internal}");
-	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe and Pb+Pb}");
-	sprintf(name,"#font[42]{%.1f<p_{T}^{RFP}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
-	tex->DrawLatex(0.175,0.76,name);
+	tex->DrawLatex(0.175,0.82,"#font[42]{Xe+Xe #sqrt{#it{s}_{NN}}=5.44 TeV, 3 #mub^{-1}}");
+	if(iOpt==11) tex->DrawLatex(0.175,0.76,"#font[42]{Pb+Pb #sqrt{#it{s}_{NN}}=5.02 TeV, CMS}");
+	else tex->DrawLatex(0.175,0.76,"#font[42]{Pb+Pb #sqrt{#it{s}_{NN}}=5.02 TeV, 22 #mub^{-1}}");
+	sprintf(name,"#font[42]{%.1f<p_{T}<%.1f GeV}",minPtRef[iR],maxPtRef[iR]);
+	tex->DrawLatex(0.175,0.695,name);
 	if(yMax>0 && yMin<0) lin->DrawLine(xMin,0,xMax,0);
 	if(iOpt==11) lin->DrawLine(xMin,1,xMax,1);
 	leg->Draw();
@@ -829,6 +939,20 @@ void Plot::getYrange(TGraph* hIn, double& yMin, double& yMax, int iOpt)
 		else if(iOpt==5 && x>10) continue;
 		if(y<yMin) yMin = y;
 		if(y>yMax) yMax = y;
+	}
+}
+
+void Plot::cvt_Npart(TGraph* gCvt, TGraphErrors* gSts, TGraphAsymmErrors* gSys)
+{
+	int NB = gSts->GetN();
+	for(int iB=0; iB<NB; iB++)
+	{
+		double x=0;
+		double y=0;
+		gSts->GetPoint(iB,x,y);
+		x = gCvt->Eval(x);
+		gSts->SetPoint(iB,x,y);
+		gSys->SetPoint(iB,x,y);
 	}
 }
 
