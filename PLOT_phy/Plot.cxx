@@ -5,10 +5,10 @@ const double plot_yMax[] = {0.15,  14e-6,  2, 1.0, 1.04, 0.34};
 
 const double graph_leg[6][4] = {
 {0.8,   0.68,   0.95,  0.9 },
-{0.125, 0.125,  0.95,  0.2},
-{0.125, 0.125,  0.95,  0.2},
-{0.125, 0.125,  0.95,  0.2},
-{0.125, 0.125,  0.95,  0.2},
+{0.175, 0.15,  0.975,  0.225},
+{0.175, 0.15,  0.975,  0.225},
+{0.175, 0.15,  0.975,  0.225},
+{0.175, 0.15,  0.975,  0.225},
 {0.8,   0.72,   0.95,  0.9}
 };
 
@@ -55,8 +55,8 @@ void Plot::execute()
 		for(int i=sts_c4_1sub[0][1][iV][0]->GetN()-1; i>=10; i--)
 		{
 			// Phase5 ONLY
-			//sts_c4_1sub[0][1][iV][0]->RemovePoint(i);
-			//sys_c4_1sub[0][1][iV][0]->RemovePoint(i);
+			sts_c4_1sub[0][1][iV][0]->RemovePoint(i);
+			sys_c4_1sub[0][1][iV][0]->RemovePoint(i);
 		}
 	}
 	for(int i=0; i<2; i++)
@@ -462,8 +462,8 @@ void Plot::initialize()
 	{
 		for(unsigned int iB=0; iB<2; iB++)
 		{
-			if(iF==0) sprintf(name,"../../MAIN_norm2PC/OUTPUT/Phase4/hist_XeXe544_binCent_bin%d.root",iB); // Phase
-			if(iF==1) sprintf(name,"../../MAIN_PbPb502/OUTPUT/Phase4/hist_PbPb502_binCent_bin%d.root",iB); // Phase
+			if(iF==0) sprintf(name,"../../MAIN_norm2PC/OUTPUT/Phase5/hist_XeXe544_binCent_bin%d.root",iB); // Phase
+			if(iF==1) sprintf(name,"../../MAIN_PbPb502/OUTPUT/Phase5/hist_PbPb502_binCent_bin%d.root",iB); // Phase
 			fIn[iF][iB] = new TFile(name,"READ");
 			for(unsigned int iV=0; iV<NV; iV++)
 			{
@@ -476,7 +476,7 @@ void Plot::initialize()
 						sprintf(name,"sys_c4_1sub_Har%d_PtRef%d",iV,iR); sys_c4_1sub[iF][iB][iV][iR]->SetName(name);
 						sprintf(name,"sts_c4_1sub_Har%d_Pt0",iV); sts_c4_1sub[iF][iB][iV][iR] = (TGraphErrors*)fConfPb->Get(name);
 						sprintf(name,"sts_c4_1sub_Har%d_PtRef%d",iV,iR); sts_c4_1sub[iF][iB][iV][iR]->SetName(name);
-						//cvt_Npart(gCvt_Cent_Npart,sts_c4_1sub[iF][iB][iV][iR],sys_c4_1sub[iF][iB][iV][iR]); // Phase5
+						cvt_Npart(gCvt_Cent_Npart,sts_c4_1sub[iF][iB][iV][iR],sys_c4_1sub[iF][iB][iV][iR]); // Phase5
 
 						sprintf(name,"CMS_ratio_v6_v4"); sys_cr64_1sub[iF][iB][iV][iR] = (TGraphAsymmErrors*)fCmsPb->Get(name);
 						sprintf(name,"sys_cr64_1sub_Har%d_PtRef%d",iV,iR); sys_cr64_1sub[iF][iB][iV][iR]->SetName(name);
@@ -491,7 +491,7 @@ void Plot::initialize()
 						}
 						sts_cr64_1sub[iF][iB][iV][iR] = new TGraphErrors(NB,x,y,xErr,yErr);
 						sprintf(name,"sts_cr64_1sub_Har%d_PtRef%d",iV,iR); sts_cr64_1sub[iF][iB][iV][iR]->SetName(name);
-						//cvt_Npart(gCvt_Cent_Npart,sts_cr64_1sub[iF][iB][iV][iR],sys_cr64_1sub[iF][iB][iV][iR]); // Phase5
+						cvt_Npart(gCvt_Cent_Npart,sts_cr64_1sub[iF][iB][iV][iR],sys_cr64_1sub[iF][iB][iV][iR]); // Phase5
 					}
 
 					readHist_VR(fIn[iF][iB],sys_c2_1sub[iF][iB][iV][iR],"sys_c2_1sub",iV,iR);
@@ -635,6 +635,7 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	leg->SetTextSize(0.05);
 	leg->SetFillStyle(0);
 	leg->SetBorderSize(0);
+	leg->SetTextFont(42);
 	if(iOpt==0 || iOpt==5) leg->SetNColumns(1);
 	else leg->SetNColumns(3);
 	if(iOpt==0)
@@ -699,8 +700,8 @@ void Plot::draw_graph(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*> vSy
 	if(iOpt==5) gPad->SetLogx(1);
 	gPad->SetTicks(1,1);
 	gPad->SetTopMargin(0.075);
-	gPad->SetBottomMargin(0.1);
-	gPad->SetLeftMargin(0.125);
+	gPad->SetBottomMargin(0.125);
+	gPad->SetLeftMargin(0.15);
 	gPad->SetRightMargin(0.025);
 	if(iOpt==5)
 	{
@@ -771,14 +772,14 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 		//gSys[iG]->SetFillStyle(3001);
 		for(int i=0; i<gSys[iG]->GetN(); i++)
 		{
-		///*
+		/*
 			gSys[iG]->SetPointEXhigh(i,1); // Phase4
 			gSys[iG]->SetPointEXlow(i,1); // Phase4
-		//*/
-		/*
+		*/
+		///*
 			gSys[iG]->SetPointEXhigh(i,5); // Phase5
 			gSys[iG]->SetPointEXlow(i,5); // Phase5
-		*/
+		//*/
 		}
 	}
 
@@ -795,13 +796,14 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	leg->SetTextSize(0.05);
 	leg->SetFillStyle(0);
 	leg->SetBorderSize(0);
+	leg->SetTextFont(42);
 	leg->SetNColumns(1);
-	leg->AddEntry(gSys[0],"#font[42]{Xe+Xe}","lpfe");
-	leg->AddEntry(gSys[1],"#font[42]{Pb+Pb}","lpfe");
+	leg->AddEntry(gSys[0],"Xe+Xe","lpfe");
+	leg->AddEntry(gSys[1],"Pb+Pb","lpfe");
 
 	double xMin =  0;
-	double xMax = 80; // Phase4
-	//double xMax = 405; // Phase5
+	//double xMax = 80; // Phase4
+	double xMax = 405; // Phase5
 	double yMin =  1;
 	double yMax = -1;
 	for(int iG=0; iG<NG; iG++) getYrange(gSts[iG],yMin,yMax,0);
@@ -819,11 +821,11 @@ void Plot::draw_graphComp(vector<TGraphErrors*> vSts, vector<TGraphAsymmErrors*>
 	cOut->cd();
 	gPad->SetTicks(1,1);
 	gPad->SetTopMargin(0.075);
-	gPad->SetBottomMargin(0.1);
-	gPad->SetLeftMargin(0.125);
+	gPad->SetBottomMargin(0.125);
+	gPad->SetLeftMargin(0.15);
 	gPad->SetRightMargin(0.025);
-	hAxis->GetXaxis()->SetTitle("Centrality [%]"); // Phase4
-	//hAxis->GetXaxis()->SetTitle("#LTN_{part}#GT"); // Phase5
+	//hAxis->GetXaxis()->SetTitle("Centrality [%]"); // Phase4
+	hAxis->GetXaxis()->SetTitle("#LTN_{part}#GT"); // Phase5
 	hAxis->GetXaxis()->SetTitleOffset(1.12);
 	hAxis->GetXaxis()->SetRangeUser(xMin,xMax);
 	if(iOpt==0) sprintf(name,"c_{%d}{2}",iV);
@@ -917,10 +919,10 @@ void Plot::styleGraph(TH1D* hIn, int k)
 {
 	hIn->SetTitle("");
 	hIn->GetYaxis()->SetTitleOffset(1.);    hIn->GetXaxis()->SetTitleOffset(1.);
-	hIn->GetYaxis()->SetTitleFont(43);      hIn->GetYaxis()->SetTitleSize(15);
-	hIn->GetYaxis()->SetLabelFont(43);      hIn->GetYaxis()->SetLabelSize(15);
-	hIn->GetXaxis()->SetTitleFont(43);      hIn->GetXaxis()->SetTitleSize(15);
-	hIn->GetXaxis()->SetLabelFont(43);      hIn->GetXaxis()->SetLabelSize(15);
+	hIn->GetYaxis()->SetTitleFont(43);      hIn->GetYaxis()->SetTitleSize(18);
+	hIn->GetYaxis()->SetLabelFont(43);      hIn->GetYaxis()->SetLabelSize(18);
+	hIn->GetXaxis()->SetTitleFont(43);      hIn->GetXaxis()->SetTitleSize(18);
+	hIn->GetXaxis()->SetLabelFont(43);      hIn->GetXaxis()->SetLabelSize(18);
 	hIn->SetMarkerStyle(mS[k]);
 	hIn->SetMarkerColor(mC[k]);
 	hIn->SetLineStyle(lS[k]);
@@ -934,8 +936,8 @@ void Plot::getYrange(TGraph* hIn, double& yMin, double& yMax, int iOpt)
 	for(int i=0; i<hIn->GetN(); i++)
 	{
 		hIn->GetPoint(i,x,y);
-		if(iOpt!=5 && x>60) continue; // Phase4
-		//if(iOpt!=5 && x<30) continue; // Phase5
+		//if(iOpt!=5 && x>60) continue; // Phase4
+		if(iOpt!=5 && x<30) continue; // Phase5
 		else if(iOpt==5 && x>10) continue;
 		if(y<yMin) yMin = y;
 		if(y>yMax) yMax = y;
